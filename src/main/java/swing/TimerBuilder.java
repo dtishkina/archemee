@@ -57,8 +57,7 @@ public class TimerBuilder {
         } else if (rotationHint.getText().equalsIgnoreCase("переменная")) {
             rotation = true;
         } else {
-            problems.add(() -> rotationHint.setText("переменная/постоянная"));
-            rotationHint.setForeground(Color.RED);
+            problems.add(() -> rotationHint.setErrorText("переменная/постоянная"));
         }
 
         targetingSeriesNumber = setValueOrAddProblemForInt(targetingSeriesNumberHint);
@@ -76,8 +75,7 @@ public class TimerBuilder {
         } else if (completionWarningHint.getText().equalsIgnoreCase("Нет")) {
             completionWarning = false;
         } else {
-            problems.add(() -> completionWarningHint.setText("Да/Нет"));
-            completionWarningHint.setForeground(Color.RED);
+            problems.add(() -> completionWarningHint.setErrorText("Да/Нет"));
         }
         return problems.isEmpty();
     }
@@ -86,8 +84,7 @@ public class TimerBuilder {
         try {
             return Integer.parseInt(currentHint.getText());
         } catch (NumberFormatException e) {
-            problems.add(() -> currentHint.setText("не число"));
-            currentHint.setForeground(Color.RED);
+            problems.add(() -> currentHint.setErrorText("не число"));
         }
         return null;
     }
