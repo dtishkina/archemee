@@ -1,5 +1,8 @@
 package swing;
 
+import util.Condition;
+import util.SecondCondition;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -38,14 +41,14 @@ class SettingsScreen extends JPanel {
         FlowLayout buttonLayout = new FlowLayout(FlowLayout.LEADING, 30, 0);
         JPanel buttonPanel = new JPanel(buttonLayout);
 
-        JButton saveButton = new RoundButton("СОХРАНИТЬ");
+        JButton saveButton = new RoundButton("СОХРАНИТЬ", 5);
         saveButton.setBorder(new RoundBorder(5, Color.decode("#3AAF37")));
         saveButton.setBackground(Color.decode("#3AAF37"));
         saveButton.setForeground(Color.WHITE);
         saveButton.setFont(new Font("Inter", Font.PLAIN, 20));
         saveButton.setPreferredSize(new Dimension(165, 44));
 
-        JButton shootingButton1 = new RoundButton("Перейти в меню настроек \"Альтернативная стрельба\"");
+        JButton shootingButton1 = new RoundButton("Перейти в меню настроек \"Альтернативная стрельба\"", 5);
         shootingButton1.setFont(new Font("Inter", Font.PLAIN, 20));
         shootingButton1.setBorder(new RoundBorder(5, Color.decode("#3AAF37")));
         Color color = new Color(0x3AAF37);
@@ -180,8 +183,11 @@ class SettingsScreen extends JPanel {
                     firstSeries_, prepareTime_, durationSeries_, completionWarning_);
             if (timerBuilder.isCorrect()) {
                 JFrame frame = (JFrame) SwingUtilities.getRoot(SettingsScreen.this);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.getContentPane().removeAll();
-                frame.getContentPane().add(new GameScreen(timerBuilder.build()));
+                GameScreen gamescreen = new GameScreen(timerBuilder.build());
+                frame.getContentPane().add(gamescreen);
+                gamescreen.startScreen();
                 frame.revalidate();
                 frame.repaint();
             } else {

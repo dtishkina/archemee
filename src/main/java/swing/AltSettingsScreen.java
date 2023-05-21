@@ -37,14 +37,14 @@ class AltSettingsScreen extends JPanel {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 30, 0));
         buttonPanel.setBackground(Color.WHITE);
 
-        JButton saveButton = new RoundButton("СОХРАНИТЬ");
+        JButton saveButton = new RoundButton("СОХРАНИТЬ", 2);
         saveButton.setBorder(new RoundBorder(5, Color.decode("#3AAF37")));
         saveButton.setBackground(Color.decode("#3AAF37"));
         saveButton.setForeground(Color.WHITE);
         saveButton.setFont(new Font("Inter", Font.PLAIN, 20));
         saveButton.setPreferredSize(new Dimension(165, 44));
 
-        JButton settingsButton = new RoundButton("Перейти в основное меню настроек");
+        JButton settingsButton = new RoundButton("Перейти в основное меню настроек", 2);
         settingsButton.setBorder(new RoundBorder(5, Color.decode("#3AAF37")));
         settingsButton.setFont(new Font("Inter", Font.PLAIN, 20));
         Color color = new Color(0x3AAF37);
@@ -127,13 +127,13 @@ class AltSettingsScreen extends JPanel {
                             new HintTextField("0"), firstSeries_, prepareTime_, durationSeries_, completionWarning_);
                     GameScreen gameScreen = new GameScreen(timerBuilder.build());
                     if (timerBuilder.isCorrect()) {
-                        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                        JFrame frame = (JFrame) SwingUtilities.getRoot(this);
+                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         frame.getContentPane().removeAll();
                         frame.getContentPane().add(gameScreen);
+                        gameScreen.altStartScreen();
                         frame.revalidate();
                         frame.repaint();
-                        gameScreen.paint();
-
                     } else {
                         timerBuilder.applyHintsChanges();
                     }
