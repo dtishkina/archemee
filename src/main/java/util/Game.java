@@ -8,9 +8,7 @@ public class Game {
     private int commandsCount;
     private boolean switchPlayer;
     private ArrayList<String> playersNames;
-
     private int iterationNumber;
-
 
     public Game(int preSeriesCount, int mainSeriesCount, int commandsCount, boolean switchPlayer) {
         this.preSeriesCount = preSeriesCount;
