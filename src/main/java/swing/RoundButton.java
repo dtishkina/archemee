@@ -3,18 +3,42 @@ package swing;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 class RoundButton extends JButton {
     private Shape shape;
+    final int cornerRadius;
+    private Color originalBackground;
 
-    public RoundButton(String label) {
+    public RoundButton(String label, int cornerRadius) {
         super(label);
 
         setOpaque(false);
 
         setBackground(Color.WHITE);
-    }
 
+        this.cornerRadius = cornerRadius;
+
+        this.setFocusPainted(false);
+        this.setBorderPainted(false);
+        this.setContentAreaFilled(false);
+
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                originalBackground = getBackground();
+                setBackground(Color.decode("#8E8E8E"));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setBackground(originalBackground);
+            }
+        });
+    }
     @Override
     protected void paintComponent(Graphics g) {
         if (getModel().isArmed()) {
@@ -22,15 +46,23 @@ class RoundButton extends JButton {
         } else {
             g.setColor(getBackground());
         }
-        g.fillRoundRect(0, 0, getSize().width - 1, getSize().height - 1, 5, 5);
+        g.fillRoundRect(0, 0, getSize().width - 1, getSize().height - 1, cornerRadius, cornerRadius);
         super.paintComponent(g);
     }
-
     @Override
     public boolean contains(int x, int y) {
         if (shape == null || !shape.getBounds().equals(getBounds())) {
-            shape = new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, 5, 5);
+            shape = new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, cornerRadius, cornerRadius);
         }
         return shape.contains(x, y);
+    }
+    public void playSound(String filePath) {
+        try {
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(RoundButton.class.getResource(filePath)));
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
