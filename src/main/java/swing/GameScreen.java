@@ -19,6 +19,10 @@ class GameScreen extends JPanel {
         panel = new JPanel(new GridBagLayout());
         panel.setPreferredSize(new Dimension(1400, 700));
         panel.setMinimumSize(new Dimension(1400, 700));
+<<<<<<< HEAD
+=======
+        setBackground(Color.decode("#EE3939"));
+>>>>>>> refs/remotes/origin/master
 
         GridBagConstraints c = new GridBagConstraints();
         c.gridy = 1;
@@ -54,7 +58,10 @@ class GameScreen extends JPanel {
     public void startScreen() {
         Color backColor = Color.decode("#EE3939");
         panel.setBackground(backColor);
+<<<<<<< HEAD
         setBackground(backColor);
+=======
+>>>>>>> refs/remotes/origin/master
 
         Font topButtons = new Font("Inter", Font.PLAIN, 24);
 
@@ -139,6 +146,7 @@ class GameScreen extends JPanel {
 
         Font bottomButtons = new Font("Inter", Font.PLAIN, 48);
 
+<<<<<<< HEAD
 //        JButton reset = new RoundButton("СБРОС", 10);
 //        bottomButtonsPanel.add(reset, buttonContains);
 //        reset.setBorder(new RoundBorder(10, Color.decode("#828282")));
@@ -161,6 +169,30 @@ class GameScreen extends JPanel {
         JButton start = new RoundButton("СТАРТ", 10);
         bottomButtonsPanel.add(start, buttonContains);
         start.setBorder(new RoundBorder(10, Color.decode("#3AAF37")));
+=======
+        JButton reset = new RoundButton("СБРОС", 20);
+        bottomButtonsPanel.add(reset, buttonContains);
+        reset.setBorder(new RoundBorder(20, Color.decode("#828282")));
+        reset.setFont(bottomButtons);
+        reset.setBackground(Color.WHITE);
+        reset.setPreferredSize(new Dimension(280, 78));
+
+        buttonContains.gridx ++;
+
+        JButton pause = new RoundButton("ПАУЗА", 10);
+        bottomButtonsPanel.add(pause, buttonContains);
+        pause.setBorder(new RoundBorder(10, Color.decode("#D9A900")));
+        pause.setFont(bottomButtons);
+        pause.setBackground(Color.WHITE);
+        pause.setForeground(Color.decode("#D9A900"));
+        pause.setPreferredSize(new Dimension(280, 78));
+
+        buttonContains.gridx ++;
+
+        JButton start = new RoundButton("СТАРТ", 20);
+        bottomButtonsPanel.add(start, buttonContains);
+        start.setBorder(new RoundBorder(20, Color.decode("#3AAF37")));
+>>>>>>> refs/remotes/origin/master
         start.setFont(bottomButtons);
         start.setBackground(Color.WHITE);
         start.setForeground(Color.decode("#3AAF37"));
@@ -182,6 +214,7 @@ class GameScreen extends JPanel {
 
         buttonContains.gridx ++;
 
+<<<<<<< HEAD
 //        JButton next = new RoundButton("СЛ. ПОД.", 10);
 //        bottomButtonsPanel.add(next, buttonContains);
 //        next.setBorder(new RoundBorder(10, Color.decode("#AC0707")));
@@ -189,6 +222,15 @@ class GameScreen extends JPanel {
 //        next.setBackground(Color.WHITE);
 //        next.setForeground(Color.decode("#AC0707"));
 //        next.setPreferredSize(new Dimension(280, 78));
+=======
+        JButton next = new RoundButton("СЛ. ПОД.", 10);
+        bottomButtonsPanel.add(next, buttonContains);
+        next.setBorder(new RoundBorder(10, Color.decode("#AC0707")));
+        next.setFont(bottomButtons);
+        next.setBackground(Color.WHITE);
+        next.setForeground(Color.decode("#AC0707"));
+        next.setPreferredSize(new Dimension(280, 78));
+>>>>>>> refs/remotes/origin/master
 
 
         c.gridx = 0;
@@ -394,9 +436,9 @@ class GameScreen extends JPanel {
     }
 
     public void preGame(SecondCondition secondCondition) {
-        panel.setBackground(Color.decode("#3AAF37"));
-        setBackground(Color.decode("#3AAF37"));
-        mainPanel.setBackground(Color.decode("#3AAF37"));
+<<<<<<< HEAD
+=======
+        mainPanel.setBackground(Color.decode("#EE3939"));
         if (secondCondition.getPlayerName().isEmpty()){
             GridBagConstraints c = new GridBagConstraints();
             c.gridy = 0;
@@ -409,17 +451,8 @@ class GameScreen extends JPanel {
             timerLabel.setForeground(Color.WHITE);
 
             mainPanel.add(timerLabel, c);
-            if (secondCondition.getTimeLeft() < 10) {
-                c.insets = new Insets(30, 240, 0, 160);
-                panel.setBackground(Color.decode("#FFF600"));
-                mainPanel.setBackground(Color.decode("#FFF600"));
-                setBackground(Color.decode("#FFF600"));
-            }
-            else {
-                c.insets = new Insets(30, 160, 0, 160);
-            }
-
             c.gridy++;
+            c.insets = new Insets(0, 110, 0, 40);
 
             JLabel seriesLabel = new JLabel(secondCondition.getGameCount() + "п");
             seriesLabel.setFont(new Font("Inter", Font.PLAIN, 116));
@@ -431,7 +464,7 @@ class GameScreen extends JPanel {
             GridBagConstraints c = new GridBagConstraints();
             c.gridy = 0;
             c.gridx = 0;
-            c.insets = new Insets(30, 0, 0, 0);
+            c.insets = new Insets(30, 80, 0, 0);
             c.fill = GridBagConstraints.BOTH;
 
             JLabel playersNameLabel = new JLabel(secondCondition.getPlayerName());
@@ -440,11 +473,97 @@ class GameScreen extends JPanel {
             mainPanel.add(playersNameLabel, c);
 
             c.gridx++;
+            c.insets = new Insets(30, 270, 0, 40);
 
             JLabel timerLabel = new JLabel(Integer.toString(secondCondition.getTimeLeft()));
             timerLabel.setPreferredSize(new Dimension(375, 363));
             timerLabel.setFont(new Font("Inter", Font.PLAIN, 270));
             timerLabel.setForeground(Color.WHITE);
+            mainPanel.add(timerLabel, c);
+
+            c.gridx++;
+            c.insets = new Insets(30, 270, 0, 100);
+
+            JLabel seriesLabel = new JLabel(secondCondition.getGameCount() + "п");
+            seriesLabel.setFont(new Font("Inter", Font.PLAIN, 116));
+            seriesLabel.setForeground(Color.WHITE);
+
+            mainPanel.add(seriesLabel, c);
+        }
+   }
+
+    private void game(SecondCondition secondCondition) {
+>>>>>>> refs/remotes/origin/master
+        panel.setBackground(Color.decode("#3AAF37"));
+        setBackground(Color.decode("#3AAF37"));
+        mainPanel.setBackground(Color.decode("#3AAF37"));
+        if (secondCondition.getPlayerName().isEmpty()){
+            GridBagConstraints c = new GridBagConstraints();
+            c.gridy = 0;
+            c.gridx = 0;
+<<<<<<< HEAD
+            c.insets = new Insets(20, 20, 0, 40);
+=======
+            c.insets = new Insets(0, 150, 0, 40);
+>>>>>>> refs/remotes/origin/master
+            c.fill = GridBagConstraints.HORIZONTAL;
+
+            JLabel timerLabel = new JLabel(Integer.toString(secondCondition.getTimeLeft()));
+            timerLabel.setFont(new Font("Inter", Font.PLAIN, 270));
+            timerLabel.setForeground(Color.WHITE);
+
+            mainPanel.add(timerLabel, c);
+<<<<<<< HEAD
+            if (secondCondition.getTimeLeft() < 10) {
+                c.insets = new Insets(30, 240, 0, 160);
+                panel.setBackground(Color.decode("#FFF600"));
+                mainPanel.setBackground(Color.decode("#FFF600"));
+                setBackground(Color.decode("#FFF600"));
+            }
+            else {
+                c.insets = new Insets(30, 160, 0, 160);
+            }
+
+            c.gridy++;
+=======
+            c.gridy++;
+            c.insets = new Insets(30, 270, 0, 50);
+>>>>>>> refs/remotes/origin/master
+
+            JLabel seriesLabel = new JLabel(secondCondition.getGameCount() + "п");
+            seriesLabel.setFont(new Font("Inter", Font.PLAIN, 116));
+            seriesLabel.setForeground(Color.WHITE);
+
+            mainPanel.add(seriesLabel, c);
+        }
+        else {
+            GridBagConstraints c = new GridBagConstraints();
+            c.gridy = 0;
+            c.gridx = 0;
+<<<<<<< HEAD
+            c.insets = new Insets(30, 0, 0, 0);
+=======
+            c.insets = new Insets(30, 80, 0, 0);
+
+>>>>>>> refs/remotes/origin/master
+            c.fill = GridBagConstraints.BOTH;
+
+            JLabel playersNameLabel = new JLabel(secondCondition.getPlayerName());
+            playersNameLabel.setFont(new Font("Inter", Font.PLAIN, 116));
+            playersNameLabel.setForeground(Color.WHITE);
+            mainPanel.add(playersNameLabel, c);
+
+            c.gridx++;
+<<<<<<< HEAD
+=======
+            c.insets = new Insets(30, 270, 0, 50);
+>>>>>>> refs/remotes/origin/master
+
+            JLabel timerLabel = new JLabel(Integer.toString(secondCondition.getTimeLeft()));
+            timerLabel.setPreferredSize(new Dimension(375, 363));
+            timerLabel.setFont(new Font("Inter", Font.PLAIN, 270));
+            timerLabel.setForeground(Color.WHITE);
+<<<<<<< HEAD
 
             JButton pause = new RoundButton("ПАУЗА", 20);
 
@@ -463,10 +582,18 @@ class GameScreen extends JPanel {
 
             mainPanel.add(timerLabel, c);
             c.gridx++;
+=======
+            mainPanel.add(timerLabel, c);
+
+            c.gridx++;
+            c.insets = new Insets(30, 270, 0, 100);
+
+>>>>>>> refs/remotes/origin/master
 
             JLabel seriesLabel = new JLabel(secondCondition.getGameCount() + "п");
             seriesLabel.setFont(new Font("Inter", Font.PLAIN, 116));
             seriesLabel.setForeground(Color.WHITE);
+<<<<<<< HEAD
             c.insets = new Insets(0, 0, 0, 60);
 
             mainPanel.add(seriesLabel, c);
@@ -564,4 +691,56 @@ class GameScreen extends JPanel {
 //        nextApproach.setPreferredSize(new Dimension(410, 78));
 //        add(nextApproach, c);
     }
+=======
+
+            mainPanel.add(seriesLabel, c);
+        }
+    }
+
+    private void rest(SecondCondition secondCondition) {
+        mainPanel.setBackground(Color.decode("#EE3939"));
+        setBackground(Color.decode("#EE3939"));
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridy = 0;
+        c.gridx = 0;
+        c.insets = new Insets(80, 230, 0, 0);
+
+        c.fill = GridBagConstraints.HORIZONTAL;
+
+        JLabel timerLabel = new JLabel(Integer.toString(secondCondition.getTimeLeft()));
+        timerLabel.setFont(new Font("Inter", Font.PLAIN, 270));
+        timerLabel.setForeground(Color.WHITE);
+        timerLabel.setBackground(Color.decode("#FFF600"));
+        mainPanel.add(timerLabel, c);
+
+        c.gridy++;
+        c.insets = new Insets(45, 190, 134, 200);
+
+        JButton nextShoot = new RoundButton("СЛ. ВЫСТРЕЛ", 20);
+        nextShoot.setBorder(new RoundBorder(10, Color.decode("#EE3939")));
+        nextShoot.setFont( new Font("Inter", Font.PLAIN, 48));
+        nextShoot.setBackground(Color.WHITE);
+        nextShoot.setForeground(Color.decode("#EE3939"));
+        nextShoot.setPreferredSize(new Dimension(410, 78));
+        mainPanel.add(nextShoot, c);
+
+        JButton nextSeries = new RoundButton("СЛ. СЕРИЯ", 20);
+        nextSeries.setBorder(new RoundBorder(10, Color.decode("#EE3939")));
+        nextSeries.setFont( new Font("Inter", Font.PLAIN, 48));
+        nextSeries.setBackground(Color.WHITE);
+        nextSeries.setForeground(Color.decode("#EE3939"));
+        nextSeries.setPreferredSize(new Dimension(410, 78));
+//        add(nextSeries, c);
+
+        JButton nextApproach = new RoundButton("СЛ. ПОДХОД", 20);
+        nextApproach.setBorder(new RoundBorder(10, Color.decode("#EE3939")));
+        nextApproach.setFont( new Font("Inter", Font.PLAIN, 48));
+        nextApproach.setBackground(Color.WHITE);
+        nextApproach.setForeground(Color.decode("#EE3939"));
+        nextApproach.setPreferredSize(new Dimension(410, 78));
+//        add(nextApproach, c);
+    }
+
+>>>>>>> refs/remotes/origin/master
 }

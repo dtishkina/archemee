@@ -41,16 +41,25 @@ class SettingsScreen extends JPanel {
         FlowLayout buttonLayout = new FlowLayout(FlowLayout.LEADING, 30, 0);
         JPanel buttonPanel = new JPanel(buttonLayout);
 
+<<<<<<< HEAD
         int borderRadius = 10;
 
         JButton saveButton = new RoundButton("СОХРАНИТЬ", borderRadius);
         saveButton.setBorder(new RoundBorder(borderRadius, Color.decode("#3AAF37")));
+=======
+        JButton saveButton = new RoundButton("СОХРАНИТЬ", 5);
+        saveButton.setBorder(new RoundBorder(5, Color.decode("#3AAF37")));
+>>>>>>> refs/remotes/origin/master
         saveButton.setBackground(Color.decode("#3AAF37"));
         saveButton.setForeground(Color.WHITE);
         saveButton.setFont(new Font("Inter", Font.PLAIN, 20));
         saveButton.setPreferredSize(new Dimension(165, 44));
 
+<<<<<<< HEAD
         JButton shootingButton1 = new RoundButton("Перейти в меню настроек \"Альтернативная стрельба\"", borderRadius);
+=======
+        JButton shootingButton1 = new RoundButton("Перейти в меню настроек \"Альтернативная стрельба\"", 5);
+>>>>>>> refs/remotes/origin/master
         shootingButton1.setFont(new Font("Inter", Font.PLAIN, 20));
         shootingButton1.setBorder(new RoundBorder(borderRadius, Color.decode("#3AAF37")));
         Color color = new Color(0x3AAF37);

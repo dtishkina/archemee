@@ -14,11 +14,11 @@ public class Timer extends Game {
     }
 
     public SecondCondition tic() {
-        if (secondCondition.iterate()) {
+        if (!secondCondition.iterate()) {
             if (secondCondition.getType() == Condition.Type.REST) {
-                secondCondition = new SecondCondition(restSecondsLimit, iterate());
-            } else {
                 secondCondition = new SecondCondition(secondsLimit, iterate());
+            } else {
+                secondCondition = new SecondCondition(restSecondsLimit, iterate());
             }
         }
         return this.secondCondition;
