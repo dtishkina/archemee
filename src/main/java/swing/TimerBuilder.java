@@ -17,7 +17,6 @@ public class TimerBuilder {
     private HintTextField rotationHint;
     private HintTextField targetingSeriesNumberHint;
     private HintTextField testSeriesNumberHint;
-    private HintTextField firstSeriesNumberHint;
     private HintTextField prepareTimeHint;
     private HintTextField durationSeriesHint;
     private HintTextField completionWarningHint;
@@ -26,7 +25,6 @@ public class TimerBuilder {
     private Boolean rotation;
     private Integer targetingSeriesNumber;
     private Integer testSeriesNumber;
-    private Integer firstSeriesNumber;
     private Integer prepareTime;
     private Integer durationSeries;
     private Boolean completionWarning;
@@ -35,13 +33,12 @@ public class TimerBuilder {
 
     public TimerBuilder(HintTextField playersNumberHint, HintTextField rotationHint,
                         HintTextField targetingSeriesNumberHint, HintTextField testSeriesNumberHint,
-                        HintTextField firstSeriesNumberHint, HintTextField prepareTimeHint, HintTextField durationSeriesHint,
+                        HintTextField prepareTimeHint, HintTextField durationSeriesHint,
                         HintTextField completionWarningHint) {
         this.playersNumberHint = playersNumberHint;
         this.rotationHint = rotationHint;
         this.targetingSeriesNumberHint = targetingSeriesNumberHint;
         this.testSeriesNumberHint = testSeriesNumberHint;
-        this.firstSeriesNumberHint = firstSeriesNumberHint;
         this.prepareTimeHint = prepareTimeHint;
         this.durationSeriesHint = durationSeriesHint;
         this.completionWarningHint = completionWarningHint;
@@ -64,8 +61,6 @@ public class TimerBuilder {
         targetingSeriesNumber = setValueOrAddProblemForInt(targetingSeriesNumberHint);
 
         testSeriesNumber = setValueOrAddProblemForInt(testSeriesNumberHint);
-
-        firstSeriesNumber = setValueOrAddProblemForInt(firstSeriesNumberHint);
 
         prepareTime = setValueOrAddProblemForInt(prepareTimeHint);
 
@@ -102,7 +97,6 @@ public class TimerBuilder {
             return true;
         }
     }
-
 
     public Timer build() {
         //TODO проверить растановку параметров

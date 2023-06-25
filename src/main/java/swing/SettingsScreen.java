@@ -41,16 +41,27 @@ class SettingsScreen extends JPanel {
         FlowLayout buttonLayout = new FlowLayout(FlowLayout.LEADING, 30, 0);
         JPanel buttonPanel = new JPanel(buttonLayout);
 
+<<<<<<< HEAD
+        int borderRadius = 10;
+
+        JButton saveButton = new RoundButton("СОХРАНИТЬ", borderRadius);
+        saveButton.setBorder(new RoundBorder(borderRadius, Color.decode("#3AAF37")));
+=======
         JButton saveButton = new RoundButton("СОХРАНИТЬ", 5);
         saveButton.setBorder(new RoundBorder(5, Color.decode("#3AAF37")));
+>>>>>>> refs/remotes/origin/master
         saveButton.setBackground(Color.decode("#3AAF37"));
         saveButton.setForeground(Color.WHITE);
         saveButton.setFont(new Font("Inter", Font.PLAIN, 20));
         saveButton.setPreferredSize(new Dimension(165, 44));
 
+<<<<<<< HEAD
+        JButton shootingButton1 = new RoundButton("Перейти в меню настроек \"Альтернативная стрельба\"", borderRadius);
+=======
         JButton shootingButton1 = new RoundButton("Перейти в меню настроек \"Альтернативная стрельба\"", 5);
+>>>>>>> refs/remotes/origin/master
         shootingButton1.setFont(new Font("Inter", Font.PLAIN, 20));
-        shootingButton1.setBorder(new RoundBorder(5, Color.decode("#3AAF37")));
+        shootingButton1.setBorder(new RoundBorder(borderRadius, Color.decode("#3AAF37")));
         Color color = new Color(0x3AAF37);
         Color transparentColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (255 * 0.13));
         shootingButton1.setBackground(transparentColor);
@@ -76,12 +87,9 @@ class SettingsScreen extends JPanel {
         JLabel rotation = new JLabel("Ротация:  ");
         JLabel targetingSeriesNumber = new JLabel("Кол-во пристрелочных серий:  ");
         JLabel testSeriesNumber = new JLabel("Кол-во зачётных серий:  ");
-        JLabel firstSeries = new JLabel("Номер  первой серии:  ");
         JLabel prepareTime = new JLabel("Время на изготовку:  ");
         JLabel durationSeries = new JLabel("Продолжительность серии:  ");
         JLabel completionWarning = new JLabel("Предупреждение о завершении:  ");
-        JLabel emptyLabel = new JLabel("ofgbkpfgo");
-        JLabel emptyLabel1 = new JLabel("ofgbkpfgo");
 
         String inputText = "ввод...";
 
@@ -94,12 +102,12 @@ class SettingsScreen extends JPanel {
         HintTextField durationSeries_ = new HintTextField(inputText);
         HintTextField completionWarning_ = new HintTextField(inputText);
 
-        JLabel[] labels1 = {playersNumber, rotation, targetingSeriesNumber, testSeriesNumber, firstSeries};
-        HintTextField[] text1 = {playersNumber_, rotation_, targetingSeriesNumber_, testSeriesNumber_, firstSeries_};
+        JLabel[] labels1 = {playersNumber, rotation, targetingSeriesNumber, testSeriesNumber};
+        HintTextField[] text1 = {playersNumber_, rotation_, targetingSeriesNumber_, testSeriesNumber_};
 
         JPanel panel1 = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(5, 5, 0, 20);
+        c.insets = new Insets(10, 5, 20, 20);
         c.gridx = 0;
         c.gridy = 0;
         panel1.setBackground(Color.decode("#F6F6F6"));
@@ -134,9 +142,10 @@ class SettingsScreen extends JPanel {
 
         JPanel panel2 = new JPanel(new GridLayout(0, 1, 10, 10));
         panel2.setBackground(Color.decode("#F6F6F6"));
+        c.insets = new Insets(0, 20, 60, 0);
         mainPane.add(panel2, c);
 
-        JLabel[] labels2 = {prepareTime, durationSeries, completionWarning, emptyLabel, emptyLabel1};
+        JLabel[] labels2 = {prepareTime, durationSeries, completionWarning};
         HintTextField[] text2 = {prepareTime_, durationSeries_, completionWarning_};
 
         c.gridx = 0;
@@ -144,25 +153,18 @@ class SettingsScreen extends JPanel {
         for (int i = 0; i < labels2.length; i++) {
             JPanel template = new JPanel(new FlowLayout(FlowLayout.LEADING, 10, 5));
             template.setAlignmentX(Component.LEFT_ALIGNMENT);
-            if (i < text2.length) {
-                panel2.add(template, c);
-                template.add(labels2[i]);
-                labels2[i].setFont(font);
-                template.add(text2[i]);
-                text2[i].setFont(inputFont);
-                text2[i].setForeground(Color.decode("#828282"));
-                text2[i].setColumns(5);
-                text2[i].setBorder(new RoundBorder(5, Color.decode("#828282")));
-                template.add(Box.createHorizontalStrut(1));
-                template.setBackground(Color.decode("#F6F6F6"));
-                c.fill = GridBagConstraints.HORIZONTAL;
-                c.gridy++;
-            } else {
-                panel2.add(labels2[i]);
-                labels2[i].setFont(font);
-                labels2[i].setForeground(Color.decode("#F6F6F6"));
-                c.gridy++;
-            }
+            panel2.add(template, c);
+            template.add(labels2[i]);
+            labels2[i].setFont(font);
+            template.add(text2[i]);
+            text2[i].setFont(inputFont);
+            text2[i].setForeground(Color.decode("#828282"));
+            text2[i].setColumns(5);
+            text2[i].setBorder(new RoundBorder(10, Color.decode("#828282")));
+            template.add(Box.createHorizontalStrut(1));
+            template.setBackground(Color.decode("#F6F6F6"));
+            c.fill = GridBagConstraints.HORIZONTAL;
+            c.gridy++;
         }
 
         GridBagConstraints mainConstraints = new GridBagConstraints();
@@ -180,7 +182,7 @@ class SettingsScreen extends JPanel {
         });
         saveButton.addActionListener(e -> {
             TimerBuilder timerBuilder = new TimerBuilder(playersNumber_, rotation_, testSeriesNumber_, targetingSeriesNumber_,
-                    firstSeries_, prepareTime_, durationSeries_, completionWarning_);
+                    prepareTime_, durationSeries_, completionWarning_);
             if (timerBuilder.isCorrect()) {
                 JFrame frame = (JFrame) SwingUtilities.getRoot(SettingsScreen.this);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

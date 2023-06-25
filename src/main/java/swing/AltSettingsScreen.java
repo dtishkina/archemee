@@ -37,15 +37,26 @@ class AltSettingsScreen extends JPanel {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 30, 0));
         buttonPanel.setBackground(Color.WHITE);
 
+<<<<<<< HEAD
+        JButton saveButton = new RoundButton("СОХРАНИТЬ", 10);
+        saveButton.setBorder(new RoundBorder(10, Color.decode("#3AAF37")));
+=======
         JButton saveButton = new RoundButton("СОХРАНИТЬ", 2);
         saveButton.setBorder(new RoundBorder(5, Color.decode("#3AAF37")));
+>>>>>>> refs/remotes/origin/master
         saveButton.setBackground(Color.decode("#3AAF37"));
         saveButton.setForeground(Color.WHITE);
         saveButton.setFont(new Font("Inter", Font.PLAIN, 20));
         saveButton.setPreferredSize(new Dimension(165, 44));
 
+<<<<<<< HEAD
+        JButton settingsButton = new RoundButton("Перейти в основное меню настроек", 10);
+
+        settingsButton.setBorder(new RoundBorder(10, Color.decode("#3AAF37")));
+=======
         JButton settingsButton = new RoundButton("Перейти в основное меню настроек", 2);
         settingsButton.setBorder(new RoundBorder(5, Color.decode("#3AAF37")));
+>>>>>>> refs/remotes/origin/master
         settingsButton.setFont(new Font("Inter", Font.PLAIN, 20));
         Color color = new Color(0x3AAF37);
         Color transparentColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (255 * 0.13));
@@ -67,7 +78,6 @@ class AltSettingsScreen extends JPanel {
         mainPane.setBackground(Color.decode("#F6F6F6"));
 
         JLabel testSeriesNumber = new JLabel("Кол-во зачетных серий:  ");
-        JLabel firstSeries = new JLabel("Номер  первой серии:  ");
         JLabel prepareTime = new JLabel("Время на изготовку:  ");
         JLabel durationSeries = new JLabel("Продолжительность серии:  ");
         JLabel completionWarning = new JLabel("Предупреждение о завершении:  ");
@@ -75,17 +85,16 @@ class AltSettingsScreen extends JPanel {
         String inputText = "ввод...";
 
         HintTextField testSeriesNumber_ = new HintTextField(inputText);
-        HintTextField firstSeries_ = new HintTextField(inputText);
         HintTextField prepareTime_ = new HintTextField(inputText);
         HintTextField durationSeries_ = new HintTextField(inputText);
         HintTextField completionWarning_ = new HintTextField(inputText);
 
-        JLabel[] labels1 = {testSeriesNumber, firstSeries, prepareTime, durationSeries, completionWarning};
-        HintTextField[] text1 = {testSeriesNumber_, firstSeries_, prepareTime_, durationSeries_, completionWarning_};
+        JLabel[] labels1 = {testSeriesNumber, prepareTime, durationSeries, completionWarning};
+        HintTextField[] text1 = {testSeriesNumber_, prepareTime_, durationSeries_, completionWarning_};
 
         JPanel panel1 = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(5, 5, 0, 20);
+        c.insets = new Insets(20, 10, 20, 20);
         c.gridx = 0;
         c.gridy = 0;
 
@@ -124,7 +133,7 @@ class AltSettingsScreen extends JPanel {
 
         saveButton.addActionListener(e -> {
                     TimerBuilder timerBuilder = new TimerBuilder(new HintTextField("1"), new HintTextField("Нет"), testSeriesNumber_,
-                            new HintTextField("0"), firstSeries_, prepareTime_, durationSeries_, completionWarning_);
+                            new HintTextField("0"), prepareTime_, durationSeries_, completionWarning_);
                     GameScreen gameScreen = new GameScreen(timerBuilder.build());
                     if (timerBuilder.isCorrect()) {
                         JFrame frame = (JFrame) SwingUtilities.getRoot(this);

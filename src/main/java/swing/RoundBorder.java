@@ -2,12 +2,11 @@ package swing;
 
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
 
 class RoundBorder implements Border {
 
-    private int radius;
-    private Color color;
+    final int radius;
+    final Color color;
 
     public RoundBorder(int radius, Color color) {
         this.radius = radius;
@@ -18,8 +17,9 @@ class RoundBorder implements Border {
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
         g.setColor(color);
         Graphics2D g2 = (Graphics2D) g;
-        g2.setStroke(new BasicStroke(1)); // толщина равна 3
+        g2.setStroke(new BasicStroke(1));
         g2.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
+
     }
 
     @Override
@@ -32,7 +32,4 @@ class RoundBorder implements Border {
         return false;
     }
 
-    public Shape getInteriorRectangle(Component c, int x, int y, int width, int height) {
-        return new RoundRectangle2D.Double(x, y, width, height, radius, radius);
-    }
 }
