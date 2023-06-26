@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-<<<<<<< HEAD
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -13,12 +12,6 @@ class RoundButton extends JButton {
     private Shape shape;
     final int cornerRadius;
     private Color originalBackground;
-=======
-
-class RoundButton extends JButton {
-    private Shape shape;
-    private int cornerRadius;
->>>>>>> refs/remotes/origin/master
 
     public RoundButton(String label, int cornerRadius) {
         super(label);
@@ -28,10 +21,8 @@ class RoundButton extends JButton {
         setBackground(Color.WHITE);
 
         this.cornerRadius = cornerRadius;
-<<<<<<< HEAD
 
         this.setFocusPainted(false);
-        this.setBorderPainted(false);
         this.setContentAreaFilled(false);
 
         this.addMouseListener(new MouseAdapter() {
@@ -46,8 +37,6 @@ class RoundButton extends JButton {
                 setBackground(originalBackground);
             }
         });
-=======
->>>>>>> refs/remotes/origin/master
     }
     @Override
     protected void paintComponent(Graphics g) {
@@ -66,10 +55,6 @@ class RoundButton extends JButton {
         }
         return shape.contains(x, y);
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/master
     public void playSound(String filePath) {
         try {
             Clip clip = AudioSystem.getClip();
