@@ -15,11 +15,11 @@ class RoundBorder implements Border {
 
     @Override
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-        g.setColor(color);
         Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(color);
         g2.setStroke(new BasicStroke(1));
         g2.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
-
     }
 
     @Override
