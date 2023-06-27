@@ -10,6 +10,7 @@ import javax.sound.sampled.AudioInputStream;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.io.File;
 
 class GameScreen extends JPanel {
@@ -18,11 +19,15 @@ class GameScreen extends JPanel {
     private JPanel panel;
     private JPanel mainPanel;
 
+    private boolean isPaused;
+
     private String currentDir = System.getProperty("user.dir");
-    private String soundPath = currentDir + "/main/java/swing/countdown-start.wav";
-    private String soundPath2 = currentDir + "/main/java/swing/countdown-start-2.wav";
+    private String soundPath = currentDir + "/src/main/java/swing/countdown-start.wav";
+    private String soundPath2 = currentDir + "/src/main/java/swing/countdown-start-2.wav";
+
     public GameScreen(Timer timer) {
         this.timer = timer;
+        this.isPaused = false;
         setLayout(new GridBagLayout());
         panel = new JPanel(new GridBagLayout());
         panel.setPreferredSize(new Dimension(1400, 700));
@@ -35,12 +40,14 @@ class GameScreen extends JPanel {
 
         add(panel, c);
     }
+
     public void paint() {
         SecondCondition currentCondition = timer.tic();
         while (currentCondition.getType() != Condition.Type.END) {
             mainPanel.removeAll();
-            System.out.println(currentCondition.getType());
-            System.out.println(Condition.Type.END);
+            //System.out.println(currentCondition.getType());
+            //System.out.println(Condition.Type.END);
+
             if (currentCondition.getType() == Condition.Type.PREGAME) {
                 preGame(currentCondition);
             } else if (currentCondition.getType() == Condition.Type.GAME) {
@@ -55,7 +62,9 @@ class GameScreen extends JPanel {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            currentCondition = timer.tic();
+            if (!isPaused) {
+                currentCondition = timer.tic();
+            }
         }
     }
 
@@ -137,18 +146,13 @@ class GameScreen extends JPanel {
         start.setPreferredSize(new Dimension(280, 78));
 
         start.addActionListener(e -> {
-            start.playSoundTwice(soundPath);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    paint();
-                }
-            }).start();
+            start.playSound(soundPath, 2);
+            new Thread(this::paint).start();
             topButtonsPanel.removeAll();
             bottomButtonsPanel.removeAll();
         });
 
-        buttonContains.gridx ++;
+        buttonContains.gridx++;
 
 //        JButton next = new RoundButton("СЛ. ПОД.", 10);
 //        bottomButtonsPanel.add(next, buttonContains);
@@ -232,7 +236,7 @@ class GameScreen extends JPanel {
         soundFirst.setBackground(Color.WHITE);
         soundFirst.setPreferredSize(new Dimension(161, 49));
 
-        buttonContains.gridx ++;
+        buttonContains.gridx++;
 
         JButton soundSecond = new RoundButton("2 сигнала", 5);
         topButtonsPanel.add(soundSecond, buttonContains);
@@ -241,7 +245,7 @@ class GameScreen extends JPanel {
         soundSecond.setBackground(Color.WHITE);
         soundSecond.setPreferredSize(new Dimension(161, 49));
 
-        buttonContains.gridx ++;
+        buttonContains.gridx++;
 
         JButton soundThird = new RoundButton("3 сигнала", 5);
         topButtonsPanel.add(soundThird, buttonContains);
@@ -250,7 +254,7 @@ class GameScreen extends JPanel {
         soundThird.setBackground(Color.WHITE);
         soundThird.setPreferredSize(new Dimension(161, 49));
 
-        buttonContains.gridx ++;
+        buttonContains.gridx++;
         buttonContains.insets = new Insets(0, 477, 0, 0);
 
         JButton settingsButton = new RoundButton("настройки", 5);
@@ -289,7 +293,7 @@ class GameScreen extends JPanel {
         reset.setBackground(Color.WHITE);
         reset.setPreferredSize(new Dimension(280, 78));
 
-        buttonContains.gridx ++;
+        buttonContains.gridx++;
 
         JButton pause = new RoundButton("ПАУЗА", 10);
         bottomButtonsPanel.add(pause, buttonContains);
@@ -298,8 +302,19 @@ class GameScreen extends JPanel {
         pause.setBackground(Color.WHITE);
         pause.setForeground(Color.decode("#D9A900"));
         pause.setPreferredSize(new Dimension(280, 78));
+        pause.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (isPaused) {
+                    pause.setText("ПАУЗА");
+                } else {
+                    pause.setText("ПРОД.");
+                }
+                isPaused = !isPaused;
+            }
+        });
 
-        buttonContains.gridx ++;
+        buttonContains.gridx++;
 
         JButton start = new RoundButton("СТАРТ", 10);
         bottomButtonsPanel.add(start, buttonContains);
@@ -320,7 +335,7 @@ class GameScreen extends JPanel {
             preGameScreen.paint();
         });
 
-        buttonContains.gridx ++;
+        buttonContains.gridx++;
 
         JButton next = new RoundButton("СЛ. ПОД.", 10);
         bottomButtonsPanel.add(next, buttonContains);
@@ -365,7 +380,7 @@ class GameScreen extends JPanel {
         panel.setBackground(Color.decode("#3AAF37"));
         setBackground(Color.decode("#3AAF37"));
         mainPanel.setBackground(Color.decode("#3AAF37"));
-        if (secondCondition.getPlayerName().isEmpty()){
+        if (secondCondition.getPlayerName().isEmpty()) {
             GridBagConstraints c = new GridBagConstraints();
             c.gridy = 0;
             c.gridx = 0;
@@ -382,8 +397,7 @@ class GameScreen extends JPanel {
                 panel.setBackground(Color.decode("#FFF600"));
                 mainPanel.setBackground(Color.decode("#FFF600"));
                 setBackground(Color.decode("#FFF600"));
-            }
-            else {
+            } else {
                 c.insets = new Insets(30, 160, 0, 160);
             }
 
@@ -394,10 +408,9 @@ class GameScreen extends JPanel {
             seriesLabel.setForeground(Color.WHITE);
 
             mainPanel.add(seriesLabel, c);
-        }
-        else {
+        } else {
 
-            if (secondCondition.getTimeLeft() == 1){
+            if (secondCondition.getTimeLeft() == 1) {
                 try {
                     File soundFile = new File(soundPath2);
                     Clip clip = AudioSystem.getClip();
@@ -428,7 +441,19 @@ class GameScreen extends JPanel {
 
             JButton pause = new RoundButton("ПАУЗА", 20);
 
-            if (secondCondition.getTimeLeft() == 5){
+            pause.addActionListener(new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (isPaused) {
+                        pause.setText("ПАУЗА");
+                    } else {
+                        pause.setText("ПРОД.");
+                    }
+                    isPaused = !isPaused;
+                }
+            });
+
+            if (secondCondition.getTimeLeft() == 5) {
                 try {
                     File soundFile = new File(soundPath);
                     Clip clip = AudioSystem.getClip();
@@ -440,15 +465,14 @@ class GameScreen extends JPanel {
                 }
             }
 
-            if (secondCondition.getTimeLeft() < 5 ) {
+            if (secondCondition.getTimeLeft() < 5) {
                 c.insets = new Insets(80, 352, 0, 354);
                 panel.setBackground(Color.decode("#FFF600"));
                 mainPanel.setBackground(Color.decode("#FFF600"));
                 setBackground(Color.decode("#FFF600"));
                 pause.setForeground(Color.decode("#FFF600"));
                 pause.setBorder(new RoundBorder(20, Color.decode("#FFF600")));
-            }
-            else {
+            } else {
                 c.insets = new Insets(80, 238, 0, 271);
                 pause.setForeground(Color.decode("#3AAF37"));
                 pause.setBorder(new RoundBorder(20, Color.decode("#3AAF37")));
@@ -479,7 +503,7 @@ class GameScreen extends JPanel {
             c.fill = GridBagConstraints.NONE;
             mainPanel.add(pause, c);
         }
-   }
+    }
 
     private void rest(SecondCondition secondCondition) {
         mainPanel.setBackground(Color.decode("#EE3939"));
@@ -490,15 +514,13 @@ class GameScreen extends JPanel {
         c.gridx = 0;
         c.gridy = 0;
 
-        if (secondCondition.getTimeLeft() < 10)
-        {
+        if (secondCondition.getTimeLeft() < 10) {
             c.insets = new Insets(80, 615, 0, 616);
-        }
-        else{
+        } else {
             c.insets = new Insets(80, 531, 0, 531);
         }
 
-        if (secondCondition.getTimeLeft() == 1){
+        if (secondCondition.getTimeLeft() == 1) {
             try {
                 File soundFile = new File(soundPath);
                 Clip clip = AudioSystem.getClip();
@@ -527,15 +549,14 @@ class GameScreen extends JPanel {
 
         RoundButton nextShoot = new RoundButton("СЛ. ВЫСТРЕЛ", 20);
         nextShoot.setBorder(new RoundBorder(20, Color.decode("#EE3939")));
-        nextShoot.setFont( new Font("Inter", Font.PLAIN, 48));
+        nextShoot.setFont(new Font("Inter", Font.PLAIN, 48));
         nextShoot.setBackground(Color.WHITE);
         nextShoot.setForeground(Color.decode("#EE3939"));
         buttonsPanel.add(nextShoot, buttonConst);
 
         nextShoot.addActionListener(e -> {
-            nextShoot.playSoundTwice(soundPath);
+            nextShoot.playSound(soundPath, 2);
         });
-
 
 
         buttonConst.gridy++;
@@ -548,6 +569,17 @@ class GameScreen extends JPanel {
         pause.setFont(new Font("Inter", Font.PLAIN, 48));
         pause.setBackground(Color.WHITE);
         pause.setForeground(Color.decode("#D9A900"));
+        pause.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (isPaused) {
+                    pause.setText("ПАУЗА");
+                } else {
+                    pause.setText("ПРОД.");
+                }
+                isPaused = !isPaused;
+            }
+        });
         buttonsPanel.add(pause, buttonConst);
 
         c.insets = new Insets(0, 0, 0, 0);

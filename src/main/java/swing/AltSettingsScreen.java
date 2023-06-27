@@ -39,6 +39,7 @@ class AltSettingsScreen extends JPanel {
 
         JButton saveButton = new RoundButton("СОХРАНИТЬ", 10);
         saveButton.setBorder(new RoundBorder(10, Color.decode("#3AAF37")));
+        saveButton.setBorder(new RoundBorder(5, Color.decode("#3AAF37")));
         saveButton.setBackground(Color.decode("#3AAF37"));
         saveButton.setForeground(Color.WHITE);
         saveButton.setFont(new Font("Inter", Font.PLAIN, 20));
@@ -47,6 +48,7 @@ class AltSettingsScreen extends JPanel {
         JButton settingsButton = new RoundButton("Перейти в основное меню настроек", 10);
 
         settingsButton.setBorder(new RoundBorder(10, Color.decode("#3AAF37")));
+        settingsButton.setBorder(new RoundBorder(5, Color.decode("#3AAF37")));
         settingsButton.setFont(new Font("Inter", Font.PLAIN, 20));
         Color color = new Color(0x3AAF37);
         Color transparentColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (255 * 0.13));

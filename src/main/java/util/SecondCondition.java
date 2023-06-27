@@ -17,4 +17,10 @@ public class SecondCondition extends Condition {
         return timeLeft > 0;
     }
 
+    @Override
+    public String toString() {
+        return "SecondCondition{" +
+                "timeLeft=" + timeLeft +
+                '}'+"\n" + super.toString();
+    }
 }
