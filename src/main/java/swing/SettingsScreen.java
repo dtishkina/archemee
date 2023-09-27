@@ -50,13 +50,19 @@ class SettingsScreen extends JPanel {
         saveButton.setFont(new Font("Inter", Font.PLAIN, 20));
         saveButton.setPreferredSize(new Dimension(165, 44));
 
-        JButton shootingButton1 = new RoundButton("Перейти в меню настроек \"Альтернативная стрельба\"", borderRadius);
+        JButton shootingButton1 = new RoundButton("\"Альтернативная стрельба\"", borderRadius);
         shootingButton1.setFont(new Font("Inter", Font.PLAIN, 20));
         shootingButton1.setBorder(new RoundBorder(borderRadius, Color.decode("#3AAF37")));
         Color color = new Color(0x3AAF37);
         Color transparentColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (255 * 0.13));
         shootingButton1.setBackground(transparentColor);
-        shootingButton1.setPreferredSize(new Dimension(573, 44));
+        shootingButton1.setPreferredSize(new Dimension(300, 44));
+
+        JButton shootingButton2 = new RoundButton("\"Альтернативная стрельба (КОМАНДЫ)\"", borderRadius);
+        shootingButton2.setFont(new Font("Inter", Font.PLAIN, 20));
+        shootingButton2.setBorder(new RoundBorder(borderRadius, Color.decode("#3AAF37")));
+        shootingButton2.setBackground(transparentColor);
+        shootingButton2.setPreferredSize(new Dimension(440, 44));
 
         GridBagConstraints buttonConstraints = new GridBagConstraints();
         buttonConstraints.gridx = 0;
@@ -67,6 +73,7 @@ class SettingsScreen extends JPanel {
 
         buttonPanel.add(saveButton);
         buttonPanel.add(shootingButton1);
+        buttonPanel.add(shootingButton2);
         add(buttonPanel, buttonConstraints);
         buttonPanel.setBackground(Color.WHITE);
 
@@ -170,6 +177,13 @@ class SettingsScreen extends JPanel {
             frame.getContentPane().add(new AltSettingsScreen());
             frame.revalidate();
             frame.repaint();
+        });
+        shootingButton2.addActionListener(e -> {
+            AltSettingsTeams settingsScreen = new AltSettingsTeams();
+            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            frame.setContentPane(settingsScreen);
+            frame.pack();
+            frame.revalidate();
         });
         saveButton.addActionListener(e -> {
             TimerBuilder timerBuilder = new TimerBuilder(playersNumber_, rotation_, testSeriesNumber_, targetingSeriesNumber_,
