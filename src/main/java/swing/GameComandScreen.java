@@ -146,7 +146,7 @@ class GameComandScreen extends JPanel {
         start.setPreferredSize(new Dimension(280, 78));
 
         start.addActionListener(e -> {
-            start.playSound(soundPath, 2);
+            start.playSound(soundPath);
             new Thread(this::paint).start();
             topButtonsPanel.removeAll();
             bottomButtonsPanel.removeAll();
@@ -555,7 +555,7 @@ class GameComandScreen extends JPanel {
         buttonsPanel.add(nextShoot, buttonConst);
 
         nextShoot.addActionListener(e -> {
-            nextShoot.playSound(soundPath, 2);
+            nextShoot.playSound(soundPath);
         });
 
 

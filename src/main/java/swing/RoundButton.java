@@ -40,7 +40,6 @@ class RoundButton extends JButton {
             }
         });
     }
-
     @Override
     protected void paintComponent(Graphics g) {
         if (getModel().isArmed()) {
@@ -51,7 +50,6 @@ class RoundButton extends JButton {
         g.fillRoundRect(0, 0, getSize().width - 1, getSize().height - 1, cornerRadius, cornerRadius);
         super.paintComponent(g);
     }
-
     @Override
     public boolean contains(int x, int y) {
         if (shape == null || !shape.getBounds().equals(getBounds())) {
@@ -59,20 +57,37 @@ class RoundButton extends JButton {
         }
         return shape.contains(x, y);
     }
-
-    public void playSound(String filePath, int times) {
+    public void playSound(String filePath) {
         try {
             File soundFile = new File(filePath);
-            System.out.println("is present " + soundFile.exists());
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
 
-            try(Clip clip = AudioSystem.getClip();) {
-                clip.open(audioIn);
-                for (int i = 0; i < times; i++) {
-                    clip.start();
-                }
-            }
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void playSoundTwice(String filePath) {
+        playSound(filePath);
+        try {
+            Thread.sleep(1000);  // Задержка в миллисекундах
+            playSound(filePath);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void playSoundThrice(String filePath) {
+        playSound(filePath);
+        try {
+            Thread.sleep(1000);  // Задержка в миллисекундах
+            playSound(filePath);
+            Thread.sleep(1000);  // Задержка в миллисекундах
+            playSound(filePath);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
