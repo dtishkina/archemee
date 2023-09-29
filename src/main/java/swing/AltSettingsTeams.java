@@ -3,8 +3,8 @@ package swing;
 import javax.swing.*;
 import java.awt.*;
 
-class AltSettingsScreen extends JPanel {
-    public AltSettingsScreen() {
+public class AltSettingsTeams extends JPanel {
+    public AltSettingsTeams() {
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(1400, 700));
 
@@ -24,8 +24,8 @@ class AltSettingsScreen extends JPanel {
         label1.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
         label1.setFont(new Font("Inter", Font.PLAIN, 65));
 
-        JLabel label2 = new JLabel("“Альтернативная стрельба”", JLabel.LEFT);
-        label2.setBorder(BorderFactory.createEmptyBorder(17, 10, 0, 0));
+        JLabel label2 = new JLabel("Команды", JLabel.LEFT);
+        label2.setBorder(BorderFactory.createEmptyBorder(17, 10, 0, 300));
         label2.setForeground(Color.decode("#8E8E8E"));
         label2.setFont(new Font("Inter", Font.PLAIN, 40));
 
@@ -44,7 +44,7 @@ class AltSettingsScreen extends JPanel {
         saveButton.setFont(new Font("Inter", Font.PLAIN, 20));
         saveButton.setPreferredSize(new Dimension(165, 44));
 
-        JButton settingsButton = new RoundButton("Перейти в основное меню настроек", 20);
+        JButton settingsButton = new RoundButton("\"Альтернативная стрельба\"", 20);
 
         settingsButton.setBorder(new RoundBorder(20, Color.decode("#3AAF37")));
         settingsButton.setFont(new Font("Inter", Font.PLAIN, 20));
@@ -53,7 +53,7 @@ class AltSettingsScreen extends JPanel {
         settingsButton.setBackground(transparentColor);
         settingsButton.setPreferredSize(new Dimension(379, 44));
 
-        JButton shootingButton2 = new RoundButton("\"Альтернативная стрельба (КОМАНДЫ)\"", 20);
+        JButton shootingButton2 = new RoundButton("Перейти в основное меню настроек", 20);
         shootingButton2.setFont(new Font("Inter", Font.PLAIN, 20));
         shootingButton2.setBorder(new RoundBorder(20, Color.decode("#3AAF37")));
         shootingButton2.setBackground(transparentColor);
@@ -143,18 +143,17 @@ class AltSettingsScreen extends JPanel {
                     } else {
                         timerBuilder.applyHintsChanges();
                     }
-
                 }
         );
-        settingsButton.addActionListener(e -> {
+        shootingButton2.addActionListener(e -> {
             SettingsScreen settingsScreen = new SettingsScreen();
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
             frame.setContentPane(settingsScreen);
             frame.pack();
             frame.revalidate();
         });
-        shootingButton2.addActionListener(e -> {
-            AltSettingsTeams settingsScreen = new AltSettingsTeams();
+        settingsButton.addActionListener(e -> {
+            AltSettingsScreen settingsScreen = new AltSettingsScreen();
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
             frame.setContentPane(settingsScreen);
             frame.pack();

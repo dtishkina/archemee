@@ -18,7 +18,6 @@ public class Game {
         playersNames = new ArrayList<String>(commandsCount);
         for (int i = 0; i < commandsCount * 2; i += 2) {
             playersNames.add(String.valueOf((char) ('A' + i)) + String.valueOf((char) ('A' + i + 1)));
-
         }
         this.iterationNumber = 1;
     }
