@@ -131,7 +131,7 @@ public class AltSettingsTeams extends JPanel {
         saveButton.addActionListener(e -> {
                     TimerBuilder timerBuilder = new TimerBuilder(new HintTextField("1"), new HintTextField("Нет"), testSeriesNumber_,
                             new HintTextField("0"), prepareTime_, durationSeries_, completionWarning_);
-                    GameScreen gameScreen = new GameScreen(timerBuilder.build());
+                    GameCommandScreen gameScreen = new GameCommandScreen(timerBuilder.build());
                     if (timerBuilder.isCorrect()) {
                         JFrame frame = (JFrame) SwingUtilities.getRoot(this);
                         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

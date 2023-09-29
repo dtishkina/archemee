@@ -1,8 +1,5 @@
 package swing;
 
-import util.Condition;
-import util.SecondCondition;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -192,9 +189,9 @@ class SettingsScreen extends JPanel {
                 JFrame frame = (JFrame) SwingUtilities.getRoot(SettingsScreen.this);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.getContentPane().removeAll();
-                GameScreen gamescreen = new GameScreen(timerBuilder.build());
-                frame.getContentPane().add(gamescreen);
-                gamescreen.startScreen();
+                GameCommandScreen gameScreen = new GameCommandScreen(timerBuilder.build());
+                frame.getContentPane().add(gameScreen);
+                gameScreen.startScreen();
                 frame.revalidate();
                 frame.repaint();
             } else {
