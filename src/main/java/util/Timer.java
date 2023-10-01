@@ -10,7 +10,7 @@ public class Timer extends Game {
         super(preSeriesCount, mainSeriesCount, commandsCount, switchPlayer);
         this.restSecondsLimit = restSecondsLimit;
         this.secondsLimit = secondsLimit;
-        this.secondCondition = new SecondCondition(secondsLimit, iterate());
+        this.secondCondition = new SecondCondition(restSecondsLimit, iterate());
     }
 
     public SecondCondition tic() {
