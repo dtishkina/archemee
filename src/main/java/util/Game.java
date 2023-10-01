@@ -25,7 +25,7 @@ public class Game {
     public Condition iterate() {
         int resultSumOfIteration = (preSeriesCount + mainSeriesCount) * 2 * commandsCount - 1;
         Condition resultCondition = new Condition();
-        if (resultSumOfIteration >= iterationNumber) {
+        if (resultSumOfIteration >= iterationNumber-1) {
             if (iterationNumber % 2 == 1) {
                 resultCondition.setType(Condition.Type.REST);
             } else {
