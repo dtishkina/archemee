@@ -189,7 +189,11 @@ class SettingsScreen extends JPanel {
                 JFrame frame = (JFrame) SwingUtilities.getRoot(SettingsScreen.this);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.getContentPane().removeAll();
-                GameCommandScreen gameScreen = new GameCommandScreen(timerBuilder.build());
+                boolean haveSignals = false;
+                if (completionWarning_.getText().equalsIgnoreCase("да")){
+                    haveSignals = true;
+                }
+                GameCommandScreen gameScreen = new GameCommandScreen(timerBuilder.build(), haveSignals);
                 frame.getContentPane().add(gameScreen);
                 gameScreen.startScreen();
                 frame.revalidate();

@@ -22,14 +22,16 @@ class GameCommandScreen extends JPanel {
 
     private boolean nextMove;
 
+    private boolean haveSignals;
     private String currentDir = System.getProperty("user.dir");
     private String soundPath = currentDir + "/src/main/java/swing/countdown-start.wav";
     private String soundPath2 = currentDir + "/src/main/java/swing/countdown-start-2.wav";
 
-    public GameCommandScreen(Timer timer) {
+    public GameCommandScreen(Timer timer, boolean haveSignals) {
         this.timer = timer;
         this.isPaused = false;
         this.nextMove = false;
+        this.haveSignals = haveSignals;
         setLayout(new GridBagLayout());
         panel = new JPanel(new GridBagLayout());
         panel.setPreferredSize(new Dimension(1400, 700));
@@ -325,7 +327,7 @@ class GameCommandScreen extends JPanel {
         start.setPreferredSize(new Dimension(280, 78));
 
         start.addActionListener(e -> {
-            GameCommandScreen preGameScreen = new GameCommandScreen(timer);
+            GameCommandScreen preGameScreen = new GameCommandScreen(timer, haveSignals);
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
             frame.setContentPane(preGameScreen);
             preGameScreen.setPreferredSize(new Dimension(1400, 700));
