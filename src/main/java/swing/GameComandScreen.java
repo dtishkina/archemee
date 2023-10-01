@@ -20,12 +20,16 @@ class GameCommandScreen extends JPanel {
 
     private boolean isPaused;
 
+    private boolean nextMove;
+
     private String currentDir = System.getProperty("user.dir");
     private String soundPath = currentDir + "/src/main/java/swing/countdown-start.wav";
     private String soundPath2 = currentDir + "/src/main/java/swing/countdown-start-2.wav";
+
     public GameCommandScreen(Timer timer) {
         this.timer = timer;
         this.isPaused = false;
+        this.nextMove = false;
         setLayout(new GridBagLayout());
         panel = new JPanel(new GridBagLayout());
         panel.setPreferredSize(new Dimension(1400, 700));
@@ -38,6 +42,7 @@ class GameCommandScreen extends JPanel {
 
         add(panel, c);
     }
+
     public void paint() {
         SecondCondition currentCondition = timer.tic();
         while (currentCondition.getType() != Condition.Type.END) {
@@ -58,6 +63,13 @@ class GameCommandScreen extends JPanel {
             }
             if (!isPaused) {
                 currentCondition = timer.tic();
+            }
+            if (nextMove) {
+                while (currentCondition.getTimeLeft() > 1){
+                    currentCondition = timer.tic();
+                }
+                currentCondition = timer.tic();
+                nextMove = false;
             }
         }
     }
@@ -151,7 +163,7 @@ class GameCommandScreen extends JPanel {
             bottomButtonsPanel.removeAll();
         });
 
-        buttonContains.gridx ++;
+        buttonContains.gridx++;
 
 //        JButton next = new RoundButton("СЛ. ПОД.", 10);
 //        bottomButtonsPanel.add(next, buttonContains);
@@ -235,7 +247,7 @@ class GameCommandScreen extends JPanel {
         soundFirst.setBackground(Color.WHITE);
         soundFirst.setPreferredSize(new Dimension(161, 49));
 
-        buttonContains.gridx ++;
+        buttonContains.gridx++;
 
         JButton soundSecond = new RoundButton("2 сигнала", 5);
         topButtonsPanel.add(soundSecond, buttonContains);
@@ -244,7 +256,7 @@ class GameCommandScreen extends JPanel {
         soundSecond.setBackground(Color.WHITE);
         soundSecond.setPreferredSize(new Dimension(161, 49));
 
-        buttonContains.gridx ++;
+        buttonContains.gridx++;
 
         JButton soundThird = new RoundButton("3 сигнала", 5);
         topButtonsPanel.add(soundThird, buttonContains);
@@ -253,7 +265,7 @@ class GameCommandScreen extends JPanel {
         soundThird.setBackground(Color.WHITE);
         soundThird.setPreferredSize(new Dimension(161, 49));
 
-        buttonContains.gridx ++;
+        buttonContains.gridx++;
         buttonContains.insets = new Insets(0, 477, 0, 0);
 
         JButton settingsButton = new RoundButton("настройки", 5);
@@ -292,7 +304,7 @@ class GameCommandScreen extends JPanel {
         reset.setBackground(Color.WHITE);
         reset.setPreferredSize(new Dimension(280, 78));
 
-        buttonContains.gridx ++;
+        buttonContains.gridx++;
 
         JButton pause = new RoundButton("ПАУЗА", 10);
         bottomButtonsPanel.add(pause, buttonContains);
@@ -302,7 +314,7 @@ class GameCommandScreen extends JPanel {
         pause.setForeground(Color.decode("#D9A900"));
         pause.setPreferredSize(new Dimension(280, 78));
 
-        buttonContains.gridx ++;
+        buttonContains.gridx++;
 
         JButton start = new RoundButton("СТАРТ", 10);
         bottomButtonsPanel.add(start, buttonContains);
@@ -323,7 +335,7 @@ class GameCommandScreen extends JPanel {
             preGameScreen.paint();
         });
 
-        buttonContains.gridx ++;
+        buttonContains.gridx++;
 
         JButton next = new RoundButton("СЛ. ПОД.", 10);
         bottomButtonsPanel.add(next, buttonContains);
@@ -368,7 +380,7 @@ class GameCommandScreen extends JPanel {
         panel.setBackground(Color.decode("#3AAF37"));
         setBackground(Color.decode("#3AAF37"));
         mainPanel.setBackground(Color.decode("#3AAF37"));
-        if (secondCondition.getPlayerName().isEmpty()){
+        if (secondCondition.getPlayerName().isEmpty()) {
             GridBagConstraints c = new GridBagConstraints();
             c.gridy = 0;
             c.gridx = 0;
@@ -385,15 +397,14 @@ class GameCommandScreen extends JPanel {
                 panel.setBackground(Color.decode("#FFF600"));
                 mainPanel.setBackground(Color.decode("#FFF600"));
                 setBackground(Color.decode("#FFF600"));
-            }
-            else {
+            } else {
                 c.insets = new Insets(30, 160, 0, 160);
             }
 
             c.gridy++;
 
             JLabel seriesLabel = new JLabel();
-            if(secondCondition.getType().toString().equals("PREGAME")){
+            if (secondCondition.getType().toString().equals("PREGAME")) {
                 seriesLabel.setText(secondCondition.getGameCount() + "п");
             } else {
                 seriesLabel.setText(secondCondition.getGameCount() + " ");
@@ -402,9 +413,8 @@ class GameCommandScreen extends JPanel {
             seriesLabel.setForeground(Color.WHITE);
 
             mainPanel.add(seriesLabel, c);
-        }
-        else {
-            if (secondCondition.getTimeLeft() == 1){
+        } else {
+            if (secondCondition.getTimeLeft() == 1) {
                 try {
                     File soundFile = new File(soundPath2);
                     Clip clip = AudioSystem.getClip();
@@ -437,7 +447,9 @@ class GameCommandScreen extends JPanel {
             buttonsPanel.setBackground(Color.decode("#3AAF37"));
             RoundButton nextApproach = new RoundButton("СЛ. ПОДХОД", 20);
             RoundButton pause = new RoundButton("ПАУЗА", 20);
-
+            nextApproach.addActionListener(e ->{
+                nextMove = true;
+            });
             pause.addActionListener(new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -450,7 +462,7 @@ class GameCommandScreen extends JPanel {
                 }
             });
 
-            if (secondCondition.getTimeLeft() == 5){
+            if (secondCondition.getTimeLeft() == 5) {
                 try {
                     File soundFile = new File(soundPath);
                     Clip clip = AudioSystem.getClip();
@@ -462,7 +474,7 @@ class GameCommandScreen extends JPanel {
                 }
             }
 
-            if (secondCondition.getTimeLeft() < 6 ) {
+            if (secondCondition.getTimeLeft() < 6) {
                 c.insets = new Insets(80, 352, 40, 354);
                 panel.setBackground(Color.decode("#FFF600"));
                 mainPanel.setBackground(Color.decode("#FFF600"));
@@ -472,12 +484,11 @@ class GameCommandScreen extends JPanel {
                 pause.setBorder(new RoundBorder(20, Color.decode("#FFF600")));
                 nextApproach.setForeground(Color.decode("#FFF600"));
                 nextApproach.setBorder(new RoundBorder(20, Color.decode("#FFF600")));
-            }
-            else if(secondCondition.getTimeLeft() < 10) {
+            } else if (secondCondition.getTimeLeft() < 10) {
                 c.insets = new Insets(80, 352, 40, 354);
                 nextApproach.setForeground(Color.decode("#3AAF37"));
                 nextApproach.setBorder(new RoundBorder(20, Color.decode("#3AAF37")));
-            } else{
+            } else {
                 c.insets = new Insets(80, 238, 40, 271);
                 pause.setForeground(Color.decode("#3AAF37"));
                 pause.setBorder(new RoundBorder(20, Color.decode("#3AAF37")));
@@ -490,7 +501,7 @@ class GameCommandScreen extends JPanel {
             c.gridx++;
 
             JLabel seriesLabel = new JLabel();
-            if(secondCondition.getType().toString().equals("PREGAME")){
+            if (secondCondition.getType().toString().equals("PREGAME")) {
                 seriesLabel.setText(secondCondition.getGameCount() + "п");
             } else {
                 seriesLabel.setText(" " + secondCondition.getGameCount());
@@ -511,7 +522,7 @@ class GameCommandScreen extends JPanel {
             buttonConst.ipadx = 100;
             buttonConst.ipady = 11;
 
-            nextApproach.setFont( new Font("Inter", Font.PLAIN, 48));
+            nextApproach.setFont(new Font("Inter", Font.PLAIN, 48));
             nextApproach.setBackground(Color.WHITE);
             nextApproach.setPreferredSize(new Dimension(410, 78));
             buttonsPanel.add(nextApproach, buttonConst);
@@ -538,7 +549,7 @@ class GameCommandScreen extends JPanel {
         setBackground(Color.decode("#EE3939"));
         panel.setBackground(Color.decode("#EE3939"));
 
-        if (secondCondition.getTimeLeft() == 1){
+        if (secondCondition.getTimeLeft() == 1) {
             try {
                 File soundFile = new File(soundPath);
                 Clip clip = AudioSystem.getClip();
@@ -567,6 +578,9 @@ class GameCommandScreen extends JPanel {
         RoundButton nextApproach = new RoundButton("СЛ. ПОДХОД", 20);
         RoundButton pause = new RoundButton("ПАУЗА", 20);
 
+        nextApproach.addActionListener(e -> {
+            nextMove = true;
+        });
         pause.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -579,7 +593,7 @@ class GameCommandScreen extends JPanel {
             }
         });
 
-        if (secondCondition.getTimeLeft() == 5){
+        if (secondCondition.getTimeLeft() == 5) {
             try {
                 File soundFile = new File(soundPath);
                 Clip clip = AudioSystem.getClip();
@@ -591,12 +605,11 @@ class GameCommandScreen extends JPanel {
             }
         }
 
-        if (secondCondition.getTimeLeft() < 6 ) {
+        if (secondCondition.getTimeLeft() < 6) {
             c.insets = new Insets(80, 352, 40, 354);
-        }
-        else if(secondCondition.getTimeLeft() < 10) {
+        } else if (secondCondition.getTimeLeft() < 10) {
             c.insets = new Insets(80, 352, 40, 354);
-        } else{
+        } else {
             c.insets = new Insets(80, 238, 40, 271);
         }
 
@@ -611,7 +624,7 @@ class GameCommandScreen extends JPanel {
         buttonConst.ipadx = 100;
         buttonConst.ipady = 11;
 
-        nextApproach.setFont( new Font("Inter", Font.PLAIN, 48));
+        nextApproach.setFont(new Font("Inter", Font.PLAIN, 48));
         nextApproach.setBorder(new RoundBorder(20, Color.decode("#EE3939")));
         nextApproach.setBackground(Color.WHITE);
         nextApproach.setForeground(Color.decode("#EE3939"));
