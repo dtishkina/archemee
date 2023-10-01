@@ -26,24 +26,24 @@ public class Game {
         int resultSumOfIteration = (preSeriesCount + mainSeriesCount) * 2 * commandsCount - 1;
         Condition resultCondition = new Condition();
         if (resultSumOfIteration >= iterationNumber) {
-            if (iterationNumber % 2 == 0) {
+            if (iterationNumber % 2 == 1) {
                 resultCondition.setType(Condition.Type.REST);
             } else {
                 String currentPlayerNumber;
                 int gameNumber;
-                if (preSeriesCount * commandsCount * 2 > iterationNumber) {
-                    gameNumber = (iterationNumber / commandsCount / 2) + 1;
+                if (preSeriesCount * commandsCount * 2 > iterationNumber - 1) {
+                    gameNumber = ((iterationNumber - 1) / commandsCount / 2) + 1;
                 } else {
-                    gameNumber = (iterationNumber / commandsCount / 2) - preSeriesCount + 1;
+                    gameNumber = ((iterationNumber - 1) / commandsCount / 2) - preSeriesCount + 1;
                 }
                 if (switchPlayer) {
-                    currentPlayerNumber = playersNames.get((((iterationNumber % (commandsCount * 2) + 1) / 2) + gameNumber - 2) % commandsCount);
+                    currentPlayerNumber = playersNames.get(((((iterationNumber - 1) % (commandsCount * 2) + 1) / 2) + gameNumber - 2) % commandsCount);
                 } else {
-                    currentPlayerNumber = playersNames.get((iterationNumber % (commandsCount * 2) + 1) / 2 - 1);
+                    currentPlayerNumber = playersNames.get(((iterationNumber - 1) % (commandsCount * 2) + 1) / 2 - 1);
                 }
                 resultCondition.setGameCount(gameNumber);
                 resultCondition.setPlayerName(currentPlayerNumber);
-                if (preSeriesCount * commandsCount * 2 > iterationNumber) {
+                if (preSeriesCount * commandsCount * 2 > iterationNumber - 1) {
                     resultCondition.setType(Condition.Type.PREGAME);
                 } else {
                     resultCondition.setType(Condition.Type.GAME);
