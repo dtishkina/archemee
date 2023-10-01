@@ -129,22 +129,25 @@ public class AltSettingsTeams extends JPanel {
         add(mainPane, mainConstraints);
 
         saveButton.addActionListener(e -> {
-                    TimerBuilder timerBuilder = new TimerBuilder(new HintTextField("1"), new HintTextField("Нет"), testSeriesNumber_,
-                            new HintTextField("0"), prepareTime_, durationSeries_, completionWarning_);
-                    GameCommandScreen gameScreen = new GameCommandScreen(timerBuilder.build());
-                    if (timerBuilder.isCorrect()) {
-                        JFrame frame = (JFrame) SwingUtilities.getRoot(this);
-                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                        frame.getContentPane().removeAll();
-                        frame.getContentPane().add(gameScreen);
-                        gameScreen.altStartScreen();
-                        frame.revalidate();
-                        frame.repaint();
-                    } else {
-                        timerBuilder.applyHintsChanges();
-                    }
+            TimerBuilder timerBuilder = new TimerBuilder(new HintTextField("1"), new HintTextField("Нет"), testSeriesNumber_,
+                    new HintTextField("0"), prepareTime_, durationSeries_, completionWarning_);
+            if (timerBuilder.isCorrect()) {
+                JFrame frame = (JFrame) SwingUtilities.getRoot(this);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.getContentPane().removeAll();
+                boolean haveSignals = false;
+                if (completionWarning_.getText().equalsIgnoreCase("да")){
+                    haveSignals = true;
                 }
-        );
+                GameCommandScreen gameScreen = new GameCommandScreen(timerBuilder.build(), haveSignals);
+                frame.getContentPane().add(gameScreen);
+                gameScreen.startScreen();
+                frame.revalidate();
+                frame.repaint();
+            } else {
+                timerBuilder.applyHintsChanges();
+            }
+        });
         shootingButton2.addActionListener(e -> {
             SettingsScreen settingsScreen = new SettingsScreen();
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
