@@ -26,12 +26,15 @@ public class TimerDemoGUI {
     private int warningTime;
     private int passedPrepTime;
 
+    private boolean haveSignal;
 
-    public TimerDemoGUI(int passedTimerValue, int maxSeries, int warning, int prepTime) {
+
+    public TimerDemoGUI(int passedTimerValue, int maxSeries, int warning, int prepTime, boolean haveSignal) {
         seriesNumber = 1;
         initialTimerValue = passedTimerValue;
         warningTime = warning;
         passedPrepTime = prepTime;
+        this.haveSignal = haveSignal;
 
         leftLabel = new JLabel(String.valueOf(initialTimerValue), SwingConstants.CENTER);
         leftLabel.setFont(new Font("Inter", Font.PLAIN, 270));
@@ -77,7 +80,7 @@ public class TimerDemoGUI {
         rightButton.setBorderPainted(false);
 
         leftButton.addActionListener(e -> {
-            if (leftTimer.isPaused() & wasTriggered == false) {
+            if (leftTimer.isPaused() & !wasTriggered) {
                 playSoundMultipleTimes("src/countdown-start.wav", 1);
                 Timer delayTimer = new Timer(1000, e1 -> toggleLeftTimer());
                 delayTimer.setRepeats(false);
@@ -85,7 +88,7 @@ public class TimerDemoGUI {
                 leftButton.setText("ПАУЗА");
                 wasTriggered = true;
             }
-            else if (leftTimer.isPaused() & wasTriggered == true ) {
+            else if (leftTimer.isPaused() & wasTriggered) {
                 playSoundMultipleTimes("src/countdown-start.wav", 0);
                 toggleLeftTimer();
                 leftButton.setText("ПАУЗА");
@@ -97,7 +100,7 @@ public class TimerDemoGUI {
         });
 
         rightButton.addActionListener(e -> {
-            if (rightTimer.isPaused() & wasTriggered == false) {
+            if (rightTimer.isPaused() & !wasTriggered) {
                 playSoundMultipleTimes("src/countdown-start.wav", 1);
                 Timer delayTimer = new Timer(1000, e1 -> toggleRightTimer());
                 delayTimer.setRepeats(false);
@@ -105,7 +108,7 @@ public class TimerDemoGUI {
                 rightButton.setText("ПАУЗА");
                 wasTriggered = true;
             }
-            else if (rightTimer.isPaused() & wasTriggered == true ) {
+            else if (rightTimer.isPaused() & wasTriggered) {
                 playSoundMultipleTimes("src/countdown-start.wav", 0);
                 toggleRightTimer();
                 rightButton.setText("ПАУЗА");
@@ -300,7 +303,7 @@ public class TimerDemoGUI {
         int[] count = {0};  // Use an array to allow modification within the lambda
 
         Timer soundTimer = new Timer( delayBetweenBeeps, e -> {
-            if (count[0] < times) {
+            if (count[0] < times && haveSignal) {
                 playSoundOnce(soundFilePath);
                 count[0]++;
             } else {
@@ -315,7 +318,7 @@ public class TimerDemoGUI {
         int[] count = {0};  // Use an array to allow modification within the lambda
 
         Timer soundTimer = new Timer( delayBetweenBeeps, e -> {
-            if (count[0] < times) {
+            if (count[0] < times && haveSignal) {
                 playSoundOnce(soundFilePath);
                 count[0]++;
             } else {
@@ -325,9 +328,8 @@ public class TimerDemoGUI {
         soundTimer.start();
     }
 
-    public void displayGUI() {
-        JFrame frame = new JFrame("Timer Demo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public JPanel displayGUI() {
+        JPanel frame = new JPanel();
         frame.setSize(1400, 700);
         frame.setLayout(new BorderLayout());
 
@@ -361,13 +363,6 @@ public class TimerDemoGUI {
         frame.add(topPanel, BorderLayout.NORTH);
         frame.add(mainPanel, BorderLayout.CENTER);
 
-        frame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            TimerDemoGUI demo = new TimerDemoGUI(5 ,5, 20, 5);
-            demo.displayGUI();
-        });
+        return frame;
     }
 }

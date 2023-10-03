@@ -4,15 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainSwing {
-    private SettingsScreen settingsScreen;
-    private JFrame frame;
+    private final JFrame frame;
 
     public MainSwing() {
-        settingsScreen = new SettingsScreen();
+        MainSettingsScreen settingsScreen = new MainSettingsScreen();
         frame = new JFrame("archemee");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1400, 700);
-        frame.setLocation(600, 400);
+        frame.setLocation(20, 100);
         frame.setMinimumSize(new Dimension(1400, 700));
         frame.getContentPane().setBackground(Color.WHITE);
         frame.setVisible(true);

@@ -40,6 +40,7 @@ class RoundButton extends JButton {
             }
         });
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         if (getModel().isArmed()) {
@@ -57,38 +58,18 @@ class RoundButton extends JButton {
         }
         return shape.contains(x, y);
     }
-    public void playSound(String filePath) {
-        try {
-            File soundFile = new File(filePath);
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+    public void playSound(String filePath, boolean haveSignal) {
+        if (haveSignal) {
+            try {
+                File soundFile = new File(filePath);
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
 
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioIn);
-            clip.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void playSoundTwice(String filePath) {
-        playSound(filePath);
-        try {
-            Thread.sleep(1000);  // Задержка в миллисекундах
-            playSound(filePath);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void playSoundThrice(String filePath) {
-        playSound(filePath);
-        try {
-            Thread.sleep(1000);  // Задержка в миллисекундах
-            playSound(filePath);
-            Thread.sleep(1000);  // Задержка в миллисекундах
-            playSound(filePath);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioIn);
+                clip.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

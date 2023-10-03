@@ -4,24 +4,27 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-class AltSettingsScreen extends SettingsScreen {
-    public AltSettingsScreen() {
+public class MainSettingsScreen extends SettingsScreen{
+    public MainSettingsScreen(){
         super();
+        contentPanel.setModeLabel("Основные");
 
-        contentPanel.setModeLabel("\"Альтернативная стрельба\"");
-
-        JLabel testSeriesNumber = new JLabel("Кол-во зачетных серий:  ");
+        JLabel playersNumber = new JLabel("Кол-во игроков:  ");
+        JLabel rotation = new JLabel("Ротация:  ");
+        JLabel targetingSeriesNumber = new JLabel("Кол-во пристрелочных серий:  ");
+        JLabel testSeriesNumber = new JLabel("Кол-во зачётных серий:  ");
         JLabel prepareTime = new JLabel("Время на изготовку:  ");
         JLabel durationSeries = new JLabel("Продолжительность серии:  ");
         JLabel completionWarning = new JLabel("Предупреждение о завершении:  ");
 
-        ArrayList<JLabel> labels = new ArrayList<>(Arrays.asList(testSeriesNumber, prepareTime, durationSeries, completionWarning));
+        ArrayList<JLabel> labels1 = new ArrayList<>(Arrays.asList(playersNumber, rotation, targetingSeriesNumber, testSeriesNumber));
+        ArrayList<JLabel> labels2 = new ArrayList<>(Arrays.asList(prepareTime, durationSeries, completionWarning));
 
-        mainPanel.addFields(labels);
+        mainPanel.addFields(labels1);
+        mainPanel.addFields(labels2);
 
-        buttonsPanel.remove(buttonsPanel.toAltSettingsButton);
         buttonsPanel.add(buttonsPanel.saveButton);
-        buttonsPanel.add(buttonsPanel.backToSettingsButton);
+        buttonsPanel.add(buttonsPanel.toAltSettingsButton);
         buttonsPanel.add(buttonsPanel.toTeamSettingsButton);
 
         buttonsPanel.saveButton.addActionListener(e -> {
@@ -30,7 +33,7 @@ class AltSettingsScreen extends SettingsScreen {
                 JFrame frame = (JFrame) SwingUtilities.getRoot(this);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.getContentPane().removeAll();
-                GameCommandScreen gameScreen = ModeBuilder.build(timerBuilder.build(), haveSignals, 2);
+                GameCommandScreen gameScreen = ModeBuilder.build(timerBuilder.build(), haveSignals, 1);
                 frame.getContentPane().add(gameScreen);
                 gameScreen.startScreen();
                 frame.revalidate();
