@@ -15,8 +15,6 @@ class RoundButton extends JButton {
     final int cornerRadius;
     private Color originalBackground;
 
-    private boolean haveSignals;
-
     public RoundButton(String label, int cornerRadius) {
         super(label);
 
@@ -42,6 +40,7 @@ class RoundButton extends JButton {
             }
         });
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         if (getModel().isArmed()) {
@@ -73,26 +72,4 @@ class RoundButton extends JButton {
             }
         }
     }
-
-    public void playSoundTwice(String filePath, boolean haveSignal) {
-        playSound(filePath, haveSignal);
-        try {
-            Thread.sleep(1000);  // Задержка в миллисекундах
-            playSound(filePath, haveSignal);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-//    public void playSoundThrice(String filePath) {
-//        playSound(filePath);
-//        try {
-//            Thread.sleep(1000);  // Задержка в миллисекундах
-//            playSound(filePath);
-//            Thread.sleep(1000);  // Задержка в миллисекундах
-//            playSound(filePath);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }
