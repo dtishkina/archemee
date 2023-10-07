@@ -11,8 +11,7 @@ public class MainSwing {
         frame = new JFrame("archemee");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1400, 700);
-        frame.setLocation(600, 400);
-//        frame.setLocation(20, 100);
+        frame.setLocation(20, 100);
         frame.setMinimumSize(new Dimension(1400, 700));
         frame.getContentPane().setBackground(Color.WHITE);
         frame.setVisible(true);
