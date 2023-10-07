@@ -10,10 +10,15 @@ import javax.sound.sampled.AudioInputStream;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-class RoundButton extends JButton {
+public class RoundButton extends JButton {
     private Shape shape;
     final int cornerRadius;
     private Color originalBackground;
+    private Color originalForeground;
+    private Color originalBorder;
+    private Color hoverBackground;
+    private Color hoverForeground;
+    private Color hoverBorder;
 
     public RoundButton(String label, int cornerRadius) {
         super(label);
@@ -31,23 +36,53 @@ class RoundButton extends JButton {
             @Override
             public void mouseEntered(MouseEvent e) {
                 originalBackground = getBackground();
-                setBackground(Color.decode("#8E8E8E"));
-            }
+                originalForeground = getForeground();
+                originalBorder = getBorder() != null ? ((RoundBorder)getBorder()).getColor() : originalForeground;
 
+                hoverBackground = new Color(originalBackground.getRed(), originalBackground.getGreen(), originalBackground.getBlue(), 33);
+                hoverForeground = originalForeground == Color.BLACK ? originalBorder : originalBackground;
+                hoverBorder = originalBackground;
+                setBackground(hoverBackground);
+                setForeground(hoverForeground);
+                setBorder(new RoundBorder(cornerRadius, hoverBorder));
+                setIgnoreRepaint(true);
+            }
             @Override
             public void mouseExited(MouseEvent e) {
                 setBackground(originalBackground);
+                setForeground(originalForeground);
+                setBorder(new RoundBorder(cornerRadius, originalBorder));
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(originalForeground == Color.BLACK) {
+                    setBorder(new RoundBorder(cornerRadius, hoverBorder.darker()));
+                    setBackground(hoverBackground.darker());
+                    setForeground(hoverForeground.darker());
+                } else if (originalForeground == Color.WHITE){
+                    setBackground(originalBackground.darker());
+                    setForeground(originalForeground);
+                    setBorder(new RoundBorder(cornerRadius, getBackground().darker()));
+                } else {
+                    setForeground(originalForeground.darker());
+                }
+                setIgnoreRepaint(true);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (getForeground() == Color.BLACK) {
+                    setBackground(originalBackground);
+                    setForeground(originalForeground);
+                    setBorder(new RoundBorder(cornerRadius, originalBorder));
+                }
             }
         });
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        if (getModel().isArmed()) {
-            g.setColor(Color.gray);
-        } else {
-            g.setColor(getBackground());
-        }
+        g.setColor(getModel().isArmed() ? originalBackground : getBackground());
         g.fillRoundRect(0, 0, getSize().width - 1, getSize().height - 1, cornerRadius, cornerRadius);
         super.paintComponent(g);
     }
