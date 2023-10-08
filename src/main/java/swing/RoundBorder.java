@@ -3,11 +3,10 @@ package swing;
 import javax.swing.border.Border;
 import java.awt.*;
 
-class RoundBorder implements Border {
+public class RoundBorder implements Border {
 
     final int radius;
     final Color color;
-
     public RoundBorder(int radius, Color color) {
         this.radius = radius;
         this.color = color;
@@ -32,4 +31,7 @@ class RoundBorder implements Border {
         return false;
     }
 
+    public Color getColor(){
+        return color;
+    }
 }

@@ -1,15 +1,15 @@
-package swing;
+package swing.mode;
 
 import util.Timer;
 
 public class ModeBuilder {
-    public static GameCommandScreen build(Timer timer, boolean haveSignals, int selectedGameMode) {
+    public static GameComandScreen build(Timer timer, boolean haveSignals, Mode mode) {
         try {
-            switch (selectedGameMode) {
-                case 1 -> {
+            switch (mode) {
+                case MAIN -> {
                     return new MainMode(timer, haveSignals);
                 }
-                case 2 -> {
+                case ALT -> {
                     return new AltMode(timer, haveSignals);
                 }
                 default -> throw new Exception("no such mode");
