@@ -245,6 +245,7 @@ public abstract class GameComandScreen extends JPanel {
         startButton.setBackground(Color.WHITE);
         startButton.setForeground(Color.decode("#EE3939"));
         startButton.setPreferredSize(new Dimension(140, 48));
+        startButton.setMnemonic('\n');
 
         startButton.addActionListener(e -> {
             startButton.playSound(getFilePath(1), haveSignals);
