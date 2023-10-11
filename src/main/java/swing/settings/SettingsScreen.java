@@ -1,6 +1,10 @@
 package swing.settings;
 
 import swing.*;
+import swing.customcomponents.HintTextField;
+import swing.customcomponents.RadioButtonsGroup;
+import swing.customcomponents.RoundBorder;
+import swing.customcomponents.RoundButton;
 import swing.mode.GameComandScreen;
 import swing.mode.Mode;
 import swing.mode.ModeBuilder;

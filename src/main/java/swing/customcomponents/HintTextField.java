@@ -1,4 +1,4 @@
-package swing;
+package swing.customcomponents;
 
 import javax.swing.*;
 import java.awt.event.FocusEvent;

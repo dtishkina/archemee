@@ -1,8 +1,8 @@
 package swing.mode;
 
 import org.jetbrains.annotations.NotNull;
-import swing.RoundBorder;
-import swing.RoundButton;
+import swing.customcomponents.RoundBorder;
+import swing.customcomponents.RoundButton;
 import swing.settings.MainSettingsScreen;
 import swing.settings.SettingsScreen;
 import util.Condition;

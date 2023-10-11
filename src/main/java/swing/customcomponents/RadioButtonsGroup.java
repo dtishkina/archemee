@@ -1,4 +1,4 @@
-package swing;
+package swing.customcomponents;
 
 import swing.settings.MainSettingsScreen;
 

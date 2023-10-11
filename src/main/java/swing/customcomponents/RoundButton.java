@@ -1,4 +1,6 @@
-package swing;
+package swing.customcomponents;
+
+import swing.customcomponents.RoundBorder;
 
 import javax.swing.*;
 import java.awt.*;

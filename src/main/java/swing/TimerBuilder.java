@@ -1,5 +1,6 @@
 package swing;
 
+import swing.customcomponents.HintTextField;
 import util.Timer;
 
 import java.awt.*;

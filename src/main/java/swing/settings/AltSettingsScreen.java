@@ -1,6 +1,6 @@
 package swing.settings;
 
-import swing.HintTextField;
+import swing.customcomponents.HintTextField;
 import swing.TimerBuilder;
 import swing.mode.Mode;
 

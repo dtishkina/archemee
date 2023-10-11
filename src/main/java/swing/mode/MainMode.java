@@ -15,7 +15,7 @@ public class MainMode extends GameComandScreen {
     }
     JPanel preGame(SecondCondition secondCondition) {
         JPanel tmp = super.preGame(secondCondition);
-        GridBagConstraints c = new GridBagConstraints();
+        GridBagConstraints c = setCommonBackground(COLOR);
         c.insets = new Insets(0, 0, 300, 75);
         mainPanel.add(tmp, c);
         return mainPanel;

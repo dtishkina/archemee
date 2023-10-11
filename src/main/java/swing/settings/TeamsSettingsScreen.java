@@ -4,6 +4,7 @@ import swing.TimerDemoGUI;
 import swing.mode.Mode;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class TeamsSettingsScreen extends AltSettingsScreen{
@@ -33,6 +34,7 @@ public class TeamsSettingsScreen extends AltSettingsScreen{
             TimerDemoGUI gameScreen = new TimerDemoGUI(Integer.parseInt(durationSeries_.getText()),
                     Integer.parseInt(testSeriesNumber_.getText()), 5,
                     Integer.parseInt(prepareTime_.getText()), haveSignal);
+            frame.setSize(new Dimension(1400, 700));
             frame.add(gameScreen.displayGUI());
             frame.revalidate();
         } else {
