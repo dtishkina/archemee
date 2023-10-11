@@ -35,7 +35,7 @@ public class TeamsSettingsScreen extends AltSettingsScreen{
                     Integer.parseInt(testSeriesNumber_.getText()), 5,
                     Integer.parseInt(prepareTime_.getText()), haveSignal);
             frame.setSize(new Dimension(1400, 700));
-            frame.add(gameScreen.displayGUI());
+            frame.setContentPane(gameScreen.displayGUI());
             frame.revalidate();
         } else {
             timerBuilder.applyHintsChanges();
