@@ -4,6 +4,7 @@ import swing.TimerDemoGUI;
 import swing.mode.Mode;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class TeamsSettingsScreen extends AltSettingsScreen{
@@ -22,21 +23,18 @@ public class TeamsSettingsScreen extends AltSettingsScreen{
         buttonsPanel.add(saveButton);
         buttonsPanel.add(getButton("\"Альтернативная стрельба\"", 300, Mode.ALT));
         buttonsPanel.add(getButton("Перейти в основное меню настроек", 360, Mode.MAIN));
-
         saveButton.addActionListener(this::actionPerformed);
     }
     protected void actionPerformed(ActionEvent e) {
-        System.out.println("main button panel");
-        boolean haveSignals = setTimerParams();
+        setTimerParams();
         if (timerBuilder.isCorrect()) {
             JFrame frame = (JFrame) SwingUtilities.getRoot(this);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.getContentPane().removeAll();
             TimerDemoGUI gameScreen = new TimerDemoGUI(Integer.parseInt(durationSeries_.getText()),
-                    Integer.parseInt(testSeriesNumber_.getText()),
-                    5,
-                    Integer.parseInt(prepareTime_.getText()),
-                    haveSignals);
+                    Integer.parseInt(testSeriesNumber_.getText()), 5,
+                    Integer.parseInt(prepareTime_.getText()), haveSignal);
+            frame.setSize(new Dimension(1400, 700));
             frame.add(gameScreen.displayGUI());
             frame.revalidate();
         } else {

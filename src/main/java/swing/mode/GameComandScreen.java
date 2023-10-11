@@ -1,8 +1,8 @@
 package swing.mode;
 
 import org.jetbrains.annotations.NotNull;
-import swing.RoundBorder;
-import swing.RoundButton;
+import swing.customcomponents.RoundBorder;
+import swing.customcomponents.RoundButton;
 import swing.settings.MainSettingsScreen;
 import swing.settings.SettingsScreen;
 import util.Condition;
@@ -245,6 +245,7 @@ public abstract class GameComandScreen extends JPanel {
         startButton.setBackground(Color.WHITE);
         startButton.setForeground(Color.decode("#EE3939"));
         startButton.setPreferredSize(new Dimension(140, 48));
+        startButton.setMnemonic('\n');
 
         startButton.addActionListener(e -> {
             startButton.playSound(getFilePath(1), haveSignals);

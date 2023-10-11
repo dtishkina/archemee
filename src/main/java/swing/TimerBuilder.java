@@ -1,5 +1,6 @@
 package swing;
 
+import swing.customcomponents.HintTextField;
 import util.Timer;
 
 import java.awt.*;
@@ -14,13 +15,10 @@ public class TimerBuilder {
     }
 
     private HintTextField playersNumberHint;
-    private HintTextField rotationHint;
     private HintTextField targetingSeriesNumberHint;
     private HintTextField testSeriesNumberHint;
     private HintTextField prepareTimeHint;
     private HintTextField durationSeriesHint;
-    private HintTextField completionWarningHint;
-
     private Integer playersNumber;
     private Boolean rotation;
     private Integer targetingSeriesNumber;
@@ -31,32 +29,23 @@ public class TimerBuilder {
 
     List<Executor> problems;
 
-    public TimerBuilder(HintTextField playersNumberHint, HintTextField rotationHint,
+    public TimerBuilder(HintTextField playersNumberHint, boolean rotation,
                         HintTextField targetingSeriesNumberHint, HintTextField testSeriesNumberHint,
                         HintTextField prepareTimeHint, HintTextField durationSeriesHint,
-                        HintTextField completionWarningHint) {
+                        boolean completionWarning) {
         this.playersNumberHint = playersNumberHint;
-        this.rotationHint = rotationHint;
+        this.rotation = rotation;
         this.targetingSeriesNumberHint = targetingSeriesNumberHint;
         this.testSeriesNumberHint = testSeriesNumberHint;
         this.prepareTimeHint = prepareTimeHint;
         this.durationSeriesHint = durationSeriesHint;
-        this.completionWarningHint = completionWarningHint;
+        this.completionWarning = completionWarning;
         this.problems = new ArrayList<>();
     }
 
     public boolean isCorrect() {
         problems.clear();
         playersNumber = setValueOrAddProblemForInt(playersNumberHint);
-
-        if (rotationHint.getText().equalsIgnoreCase("постоянная")) {
-            rotation = false;
-        } else if (rotationHint.getText().equalsIgnoreCase("переменная")) {
-            rotation = true;
-        } else {
-            problems.add(() -> rotationHint.setText("переменная/постоянная"));
-            rotationHint.setForeground(Color.RED);
-        }
 
         targetingSeriesNumber = setValueOrAddProblemForInt(targetingSeriesNumberHint);
 
@@ -66,14 +55,6 @@ public class TimerBuilder {
 
         durationSeries = setValueOrAddProblemForInt(durationSeriesHint);
 
-        if (completionWarningHint.getText().equalsIgnoreCase("Да")) {
-            completionWarning = true;
-        } else if (completionWarningHint.getText().equalsIgnoreCase("Нет")) {
-            completionWarning = false;
-        } else {
-            problems.add(() -> completionWarningHint.setText("Да/Нет"));
-            completionWarningHint.setForeground(Color.RED);
-        }
         return problems.isEmpty();
     }
 

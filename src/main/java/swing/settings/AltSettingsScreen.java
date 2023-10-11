@@ -1,6 +1,6 @@
 package swing.settings;
 
-import swing.HintTextField;
+import swing.customcomponents.HintTextField;
 import swing.TimerBuilder;
 import swing.mode.Mode;
 
@@ -19,7 +19,7 @@ class AltSettingsScreen extends SettingsScreen {
     }
     void getMainPanel(){
         super.getMainPanel();
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(24, 20, 24, 692));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(24, 20, 24, 560));
         GridBagConstraints c = new GridBagConstraints();
         c.anchor = GridBagConstraints.WEST;
         c.gridy=0;
@@ -34,17 +34,17 @@ class AltSettingsScreen extends SettingsScreen {
         MODE = Mode.ALT;
         buttonsPanel.add(getButton("Перейти в основное меню настроек", 360, Mode.MAIN));
         buttonsPanel.add(getButton("\"Альтернативная стрельба (КОМАНДЫ)\"", 440, Mode.TEAMS));
+        saveButton.addActionListener(e -> haveSignal = signalOption.getSelectedButton().getText().equalsIgnoreCase("да"));
     }
     @Override
-    boolean setTimerParams() {
+    void setTimerParams() {
         timerBuilder = new TimerBuilder(new HintTextField("1"),
-                new HintTextField("постоянная"),
+                true,
                 new HintTextField("0"),
                 testSeriesNumber_,
                 prepareTime_,
                 durationSeries_,
-                completionWarning_);
-        return completionWarning_.getText().equalsIgnoreCase("да");
+                haveSignal);
     }
     @Override
     ArrayList<LinkedHashMap<HintTextField, JLabel>> defineContent(){

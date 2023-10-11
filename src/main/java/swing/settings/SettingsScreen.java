@@ -1,6 +1,10 @@
 package swing.settings;
 
 import swing.*;
+import swing.customcomponents.HintTextField;
+import swing.customcomponents.RadioButtonsGroup;
+import swing.customcomponents.RoundBorder;
+import swing.customcomponents.RoundButton;
 import swing.mode.GameComandScreen;
 import swing.mode.Mode;
 import swing.mode.ModeBuilder;
@@ -14,16 +18,17 @@ import java.util.Map;
 
 public abstract class SettingsScreen extends JPanel {
     protected TimerBuilder timerBuilder;
+    protected RoundButton saveButton;
     JPanel buttonsPanel;
     JPanel mainPanel;
     JPanel headerPanel;
     JLabel modeLabel;
-    protected RoundButton saveButton;
     static Color SCREEN_COLOR = Color.WHITE;
     static int BORDER_RADIUS = 20;
     static Color BUTTON_COLOR = Color.decode("#3AAF37");
     Mode MODE;
-    String input = "ввод...";
+    boolean haveSignal;
+    String input = " ввод...";
     HintTextField playersNumber_ = new HintTextField(input);
     HintTextField rotation_ = new HintTextField(input);
     HintTextField targetingSeriesNumber_ = new HintTextField(input);
@@ -31,6 +36,8 @@ public abstract class SettingsScreen extends JPanel {
     HintTextField prepareTime_ = new HintTextField(input);
     HintTextField durationSeries_ = new HintTextField(input);
     HintTextField completionWarning_ = new HintTextField(input);
+    RadioButtonsGroup signalOption;
+    RadioButtonsGroup rotationOption;
     public SettingsScreen() {
         setLayout(new GridBagLayout());
         setBackground(SCREEN_COLOR);
@@ -98,12 +105,13 @@ public abstract class SettingsScreen extends JPanel {
         saveButton.setForeground(Color.WHITE);
         saveButton.setFont(new Font("Inter", Font.PLAIN, 20));
         saveButton.setPreferredSize(new Dimension(165, 44));
+        saveButton.setMnemonic('\n');
 
-        saveButton.addActionListener(e -> {
-            boolean haveSignals = setTimerParams();
+        saveButton.addActionListener(event -> {
+            setTimerParams();
             if (timerBuilder.isCorrect()) {
                 JFrame frame = (JFrame) SwingUtilities.getRoot(this);
-                GameComandScreen gameScreen = ModeBuilder.build(timerBuilder.build(), haveSignals, MODE);
+                GameComandScreen gameScreen = ModeBuilder.build(timerBuilder.build(), haveSignal, MODE);
                 if (frame!= null) {
                     frame.getContentPane().removeAll();
                     frame.getContentPane().add(gameScreen);
@@ -116,8 +124,11 @@ public abstract class SettingsScreen extends JPanel {
         buttonsPanel.removeAll();
         buttonsPanel.add(saveButton);
     }
-    abstract boolean setTimerParams();
+    abstract void setTimerParams();
     ArrayList<LinkedHashMap<HintTextField, JLabel>> defineContent(){
+        rotationOption = new RadioButtonsGroup("Постоянная", "Переменная");
+        signalOption = new RadioButtonsGroup("Да", "Нет");
+
         LinkedHashMap<HintTextField, JLabel> column1 = new LinkedHashMap<>();
         LinkedHashMap<HintTextField, JLabel> column2 = new LinkedHashMap<>();
 
@@ -150,9 +161,16 @@ public abstract class SettingsScreen extends JPanel {
 
             tmp.setBackground(mainPanel.getBackground());
 
-            tmp.add(setLabelStyle(entry.getValue()));  // Добавляем лейбл
+            tmp.add(setLabelStyle(entry.getValue()));
             c.gridx = 1;
-            tmp.add(setTextFieldStyle(entry.getKey()));    // Добавляем текстовое поле
+
+            if (entry.getKey() == rotation_){
+               tmp.add(rotationOption.getGroupPanel(), c);
+            }else if (entry.getKey() == completionWarning_){
+                tmp.add(signalOption.getGroupPanel(), c);
+            }else {
+                tmp.add(setTextFieldStyle(entry.getKey()));
+            }
             c.gridy++;
         }
         return inner;
