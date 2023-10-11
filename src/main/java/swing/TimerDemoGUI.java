@@ -1,5 +1,8 @@
 package swing;
 
+import swing.customcomponents.RoundBorder;
+import swing.customcomponents.RoundButton;
+
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
@@ -25,13 +28,16 @@ public class TimerDemoGUI {
     private int initialTimerValue;
     private int warningTime;
     private int passedPrepTime;
+    private boolean haveSignal;
+    String currentDir = System.getProperty("user.dir");
+    String soundPath = currentDir + "/src/main/java/swing/countdown-start.wav";
 
-
-    public TimerDemoGUI(int passedTimerValue, int maxSeries, int warning, int prepTime) {
+    public TimerDemoGUI(int passedTimerValue, int maxSeries, int warning, int prepTime, boolean haveSignal) {
         seriesNumber = 1;
         initialTimerValue = passedTimerValue;
         warningTime = warning;
         passedPrepTime = prepTime;
+        this.haveSignal = haveSignal;
 
         leftLabel = new JLabel(String.valueOf(initialTimerValue), SwingConstants.CENTER);
         leftLabel.setFont(new Font("Inter", Font.PLAIN, 270));
@@ -77,7 +83,7 @@ public class TimerDemoGUI {
         rightButton.setBorderPainted(false);
 
         leftButton.addActionListener(e -> {
-            if (leftTimer.isPaused() & wasTriggered == false) {
+            if (leftTimer.isPaused() & !wasTriggered) {
                 playSoundMultipleTimes("src/countdown-start.wav", 1);
                 Timer delayTimer = new Timer(1000, e1 -> toggleLeftTimer());
                 delayTimer.setRepeats(false);
@@ -85,7 +91,7 @@ public class TimerDemoGUI {
                 leftButton.setText("ПАУЗА");
                 wasTriggered = true;
             }
-            else if (leftTimer.isPaused() & wasTriggered == true ) {
+            else if (leftTimer.isPaused() & wasTriggered) {
                 playSoundMultipleTimes("src/countdown-start.wav", 0);
                 toggleLeftTimer();
                 leftButton.setText("ПАУЗА");
@@ -97,16 +103,16 @@ public class TimerDemoGUI {
         });
 
         rightButton.addActionListener(e -> {
-            if (rightTimer.isPaused() & wasTriggered == false) {
-                playSoundMultipleTimes("src/countdown-start.wav", 1);
+            if (rightTimer.isPaused() & !wasTriggered) {
+                playSoundMultipleTimes(soundPath, 1);
                 Timer delayTimer = new Timer(1000, e1 -> toggleRightTimer());
                 delayTimer.setRepeats(false);
                 delayTimer.start();
                 rightButton.setText("ПАУЗА");
                 wasTriggered = true;
             }
-            else if (rightTimer.isPaused() & wasTriggered == true ) {
-                playSoundMultipleTimes("src/countdown-start.wav", 0);
+            else if (rightTimer.isPaused() & wasTriggered) {
+                playSoundMultipleTimes(soundPath, 0);
                 toggleRightTimer();
                 rightButton.setText("ПАУЗА");
             }
@@ -117,7 +123,7 @@ public class TimerDemoGUI {
         });
 
         leftPrepTimer.setTimerFinishedCallback(() -> {
-            playSoundOnce("src/countdown-start.wav"); // Replace with actual file path
+            playSoundOnce(soundPath);
             leftPrepTimer.stop();
             leftTimer.start();
             leftPanel.setBackground(Color.decode("#3AAF37"));
@@ -128,7 +134,7 @@ public class TimerDemoGUI {
         });
 
         rightPrepTimer.setTimerFinishedCallback(() -> {
-            playSoundOnce("src/countdown-start.wav"); // Replace with actual file path
+            playSoundOnce(soundPath);
             rightPrepTimer.stop();
             rightTimer.start();
             rightPanel.setBackground(Color.decode("#3AAF37"));
@@ -141,20 +147,20 @@ public class TimerDemoGUI {
         leftTimer.setTimerFinishedCallback(() -> {
             leftPanel.setBackground(Color.decode("#EE3939"));
             if (rightTimer.isTimeOver()){
-                playEndingSoundMultipleTimes("src/countdown-start.wav", 3);
+                playEndingSoundMultipleTimes(soundPath, 3);
             }
             else {
-                playSoundOnce("src/countdown-start.wav");
+                playSoundOnce(soundPath);
             }
         });
 
         rightTimer.setTimerFinishedCallback(() -> {
             rightPanel.setBackground(Color.decode("#EE3939"));
             if (leftTimer.isTimeOver()){
-                playEndingSoundMultipleTimes("src/countdown-start.wav", 3);
+                playEndingSoundMultipleTimes(soundPath, 3);
             }
             else {
-                playSoundOnce("src/countdown-start.wav");
+                playSoundOnce(soundPath);
             }
         });
 
@@ -165,7 +171,7 @@ public class TimerDemoGUI {
             if (leftPrepTimer.isTimeOver()) {
                 // If prep timer is over, toggle the main timer
                 if (leftTimer.isPaused()) {
-                    playSoundOnce("src/countdown-start.wav");
+                    playSoundOnce(soundPath);
                     leftPanel.setBackground(Color.decode("#3AAF37"));
                     leftButton.setText("ПАУЗА");
                     leftButton.setForeground(Color.decode("#3AAF37"));
@@ -179,7 +185,7 @@ public class TimerDemoGUI {
             } else {
                 // If prep timer is not over, toggle the prep timer
                 if (leftPrepTimer.isPaused()) {
-                    playSoundOnce("src/countdown-start.wav");
+                    playSoundOnce(soundPath);
                     leftPanel.setBackground(Color.decode("#EE3939")); // Use appropriate color for prep timer
                     leftButton.setForeground(Color.decode("#EE3939"));
                     leftButton.setText("ПАУЗА");
@@ -194,7 +200,7 @@ public class TimerDemoGUI {
         }
         else {
             if (leftTimer.isPaused()) {
-                playSoundOnce("src/countdown-start.wav");
+                playSoundOnce(soundPath);
                 leftPanel.setBackground(Color.decode("#3AAF37"));
                 leftButton.setText("ПАУЗА");
                 leftButton.setForeground(Color.decode("#3AAF37"));
@@ -213,7 +219,7 @@ public class TimerDemoGUI {
             if (rightPrepTimer.isTimeOver()) {
                 // If prep timer is over, toggle the main timer
                 if (rightTimer.isPaused()) {
-                    playSoundOnce("src/countdown-start.wav");
+                    playSoundOnce(soundPath);
                     rightPanel.setBackground(Color.decode("#3AAF37"));
                     rightButton.setText("ПАУЗА");
                     rightButton.setForeground(Color.decode("#3AAF37"));
@@ -227,7 +233,7 @@ public class TimerDemoGUI {
             } else {
                 // If prep timer is not over, toggle the prep timer
                 if (rightPrepTimer.isPaused()) {
-                    playSoundOnce("src/countdown-start.wav");
+                    playSoundOnce(soundPath);
                     rightPanel.setBackground(Color.decode("#EE3939")); // Use appropriate color for prep timer
                     rightButton.setText("ПАУЗА");
                     rightButton.setForeground(Color.decode("#EE3939"));
@@ -242,7 +248,7 @@ public class TimerDemoGUI {
         }
         else {
             if (rightTimer.isPaused()) {
-                playSoundOnce("src/countdown-start.wav");
+                playSoundOnce(soundPath);
                 rightPanel.setBackground(Color.decode("#3AAF37"));
                 rightButton.setText("ПАУЗА");
                 rightButton.setForeground(Color.decode("#3AAF37"));
@@ -279,7 +285,7 @@ public class TimerDemoGUI {
         rightLabel.setText(String.valueOf(0));
         wasTriggered = false;
         prepTimeToggled = false;
-        playEndingSoundMultipleTimes("src/countdown-start.wav", 3);
+        playEndingSoundMultipleTimes(soundPath, 3);
 
     }
 
@@ -288,7 +294,7 @@ public class TimerDemoGUI {
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File(soundFilePath));
             Clip clip = AudioSystem.getClip();
             clip.open(audioIn);
-            clip.setFramePosition(0);  // reset clip to the start
+            clip.setFramePosition(0);
             clip.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
@@ -297,10 +303,10 @@ public class TimerDemoGUI {
 
     public void playSoundMultipleTimes(String soundFilePath, int times) {
         int delayBetweenBeeps = 0;
-        int[] count = {0};  // Use an array to allow modification within the lambda
+        int[] count = {0};
 
         Timer soundTimer = new Timer( delayBetweenBeeps, e -> {
-            if (count[0] < times) {
+            if (count[0] < times && haveSignal) {
                 playSoundOnce(soundFilePath);
                 count[0]++;
             } else {
@@ -312,10 +318,10 @@ public class TimerDemoGUI {
 
     public void playEndingSoundMultipleTimes(String soundFilePath, int times) {
         int delayBetweenBeeps = 500;
-        int[] count = {0};  // Use an array to allow modification within the lambda
+        int[] count = {0};
 
         Timer soundTimer = new Timer( delayBetweenBeeps, e -> {
-            if (count[0] < times) {
+            if (count[0] < times && haveSignal) {
                 playSoundOnce(soundFilePath);
                 count[0]++;
             } else {
@@ -325,9 +331,8 @@ public class TimerDemoGUI {
         soundTimer.start();
     }
 
-    public void displayGUI() {
-        JFrame frame = new JFrame("Timer Demo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public JPanel displayGUI() {
+        JPanel frame = new JPanel();
         frame.setSize(1400, 700);
         frame.setLayout(new BorderLayout());
 
@@ -361,13 +366,6 @@ public class TimerDemoGUI {
         frame.add(topPanel, BorderLayout.NORTH);
         frame.add(mainPanel, BorderLayout.CENTER);
 
-        frame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            TimerDemoGUI demo = new TimerDemoGUI(5 ,5, 20, 5);
-            demo.displayGUI();
-        });
+        return frame;
     }
 }

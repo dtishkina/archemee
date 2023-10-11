@@ -1,10 +1,10 @@
-package swing;
+package swing.customcomponents;
 
 import javax.swing.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-class HintTextField extends JTextField implements FocusListener {
+public class HintTextField extends JTextField implements FocusListener {
     private String hint;
 
     public HintTextField(String hint) {
